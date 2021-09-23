@@ -8,16 +8,18 @@
 
 
 
-@foreach (var item in Model) {
-    <div class="Pole">
-        <div class="G">@Html.DisplayFor(modelItem => item.G)</div>
-        <div  class="H">@Html.DisplayFor(modelItem => item.H)</div>
-        <div class="F">@Html.DisplayFor(modelItem => item.F)</div>
-        <div class="Rodzic">@Html.DisplayFor(modelItem => item.Rodzic)</div>
-    </div>
-    if(i%10==0)
-    {
+@for (int i=0; i < Model.Count();  i++) {
 
+    <div class="Pole">
+        <div class="G">@Html.DisplayFor(modelItem => Model.ElementAt(i).G)</div>
+        <div  class="H">@Html.DisplayFor(modelItem => Model.ElementAt(i).H)</div>
+        <div class="F">@Html.DisplayFor(modelItem => Model.ElementAt(i).F)</div>
+        <div class="Rodzic"> rodz: @Html.DisplayFor(modelItem => Model.ElementAt(i).Rodzic) </div>
+    </div>
+
+    @if ((i+1)%10==0)
+    {
+        <div style="clear:both"></div>
     }
 }
 
