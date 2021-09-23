@@ -6,60 +6,18 @@
 
 <h1>View</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Otwarty)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rodzic)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.G)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.H)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.F)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+
+
 @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Otwarty)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rodzic)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.G)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.H)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.F)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
+    <div class="Pole">
+        <div class="G">@Html.DisplayFor(modelItem => item.G)</div>
+        <div  class="H">@Html.DisplayFor(modelItem => item.H)</div>
+        <div class="F">@Html.DisplayFor(modelItem => item.F)</div>
+        <div class="Rodzic">@Html.DisplayFor(modelItem => item.Rodzic)</div>
+    </div>
+    if(i%10==0)
+    {
+
+    }
 }
-    </tbody>
-</table>
+
