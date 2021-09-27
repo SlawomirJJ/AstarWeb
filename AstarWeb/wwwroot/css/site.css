@@ -34,6 +34,38 @@ for details on configuring this project to bundle and minify static web assets. 
     bottom: 0
 }
 
+.PoleS {
+
+    width: 70px;
+    height: 70px;
+    background-color:greenyellow;
+    color: white;
+    float: left;
+    margin: 5px;
+    position: relative
+    
+}
+
+.PoleK {
+    width: 70px;
+    height: 70px;
+    background-color: saddlebrown;
+    color: white;
+    float: left;
+    margin: 5px;
+    position: relative
+}
+
+.PoleP {
+    width: 70px;
+    height: 70px;
+    background-color: darkblue;
+    color: white;
+    float: left;
+    margin: 5px;
+    position: relative
+}
+
 .Pole {
     width: 70px;
     height: 70px;
