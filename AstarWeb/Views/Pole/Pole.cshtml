@@ -5,74 +5,74 @@
 }
 
 
-<h1>Siatka</h1>
+<button class="button" name="buttonNumber" type="submit" asp-controller="button" asp-action="HandleButtonClick">Wyznacz trasę </button>
 
-@for (int i = 0; i < Model.Count(); i++)
-{
-
-
-    @if (i % 10 == 0)
+    @for (int i = 0; i < Model.Count(); i++)
     {
-        <div style="clear:both"></div>
+
+
+        @if (i % 10 == 0)
+        {
+            <div style="clear:both"></div>
+
+        }
+
+        if (Model.ElementAt(i).StartKon == 's')
+        {
+            <div id="nr" class="PoleS">
+
+                <div class="G">@Html.DisplayFor(modelItem => Model.ElementAt(i).G)</div>
+                <div class="H">@Html.DisplayFor(modelItem => Model.ElementAt(i).H)</div>
+
+                <div class="Rodzic"> Id= @Html.DisplayFor(modelItem => Model.ElementAt(i).Id) </div>
+
+            </div>
+            continue;
+        }
+        if (Model.ElementAt(i).StartKon == 'k')
+        {
+            <div id="nr" class="PoleK">
+
+                <div class="G">@Html.DisplayFor(modelItem => Model.ElementAt(i).G)</div>
+                <div class="H">@Html.DisplayFor(modelItem => Model.ElementAt(i).H)</div>
+
+                <div class="Rodzic"> Id= @Html.DisplayFor(modelItem => Model.ElementAt(i).Id) </div>
+
+            </div>
+            continue;
+        }
+        if (Model.ElementAt(i).Osiagalny == true)
+        {
+            <div id="nr" class="Pole">
+
+                <div class="G">@Html.DisplayFor(modelItem => Model.ElementAt(i).G)</div>
+                <div class="H">@Html.DisplayFor(modelItem => Model.ElementAt(i).H)</div>
+
+                <div class="Rodzic"> Id= @Html.DisplayFor(modelItem => Model.ElementAt(i).Id) </div>
+
+            </div>
+            continue;
+        }
+        if (Model.ElementAt(i).Osiagalny == false)
+        {
+            <div id="nr" class="PoleP">
+
+                <div class="G">@Html.DisplayFor(modelItem => Model.ElementAt(i).G)</div>
+                <div class="H">@Html.DisplayFor(modelItem => Model.ElementAt(i).H)</div>
+
+                <div class="Rodzic"> Id= @Html.DisplayFor(modelItem => Model.ElementAt(i).Id) </div>
+
+            </div>
+            continue;
+        }
+
+
+
+
+
+
+
+
 
     }
-
-    if (Model.ElementAt(i).StartKon == 's')
-    {
-        <div id="nr" class="PoleS">
-
-            <div class="G">@Html.DisplayFor(modelItem => Model.ElementAt(i).G)</div>
-            <div class="H">@Html.DisplayFor(modelItem => Model.ElementAt(i).H)</div>
-
-            <div class="Rodzic"> rodz: @Html.DisplayFor(modelItem => Model.ElementAt(i).Rodzic) </div>
-
-        </div>
-        continue;
-    }
-    if (Model.ElementAt(i).StartKon == 'k')
-    {
-        <div id="nr" class="PoleK">
-
-            <div class="G">@Html.DisplayFor(modelItem => Model.ElementAt(i).G)</div>
-            <div class="H">@Html.DisplayFor(modelItem => Model.ElementAt(i).H)</div>
-
-            <div class="Rodzic"> rodz: @Html.DisplayFor(modelItem => Model.ElementAt(i).Rodzic) </div>
-
-        </div>
-        continue;
-    }
-    if (Model.ElementAt(i).Osiagalny == true)
-    {
-        <div id="nr" class="Pole">
-
-            <div class="G">@Html.DisplayFor(modelItem => Model.ElementAt(i).G)</div>
-            <div class="H">@Html.DisplayFor(modelItem => Model.ElementAt(i).H)</div>
-
-            <div class="Rodzic"> rodz: @Html.DisplayFor(modelItem => Model.ElementAt(i).Rodzic) </div>
-
-        </div>
-        continue;
-    }
-    if (Model.ElementAt(i).Osiagalny == false)
-    {
-        <div id="nr" class="PoleP">
-
-            <div class="G">@Html.DisplayFor(modelItem => Model.ElementAt(i).G)</div>
-            <div class="H">@Html.DisplayFor(modelItem => Model.ElementAt(i).H)</div>
-
-            <div class="Rodzic"> rodz: @Html.DisplayFor(modelItem => Model.ElementAt(i).Rodzic) </div>
-
-        </div>
-        continue;
-    }
-
-
-
-
-
-
-
-
-
-}
 

@@ -16,6 +16,8 @@ namespace AstarWeb.Models
         public char StartKon { get; set; }// "s"-startowy "k"-koncowy "n" -nie
 
         public bool Osiagalny { get; set; } //"o"-osiągalny "n"-nie osiągalny (wokable)
+        public int X { get; set; } //wspóżędna x
+        public int Y { get; set; } // wspóżędna y
 
 
 
