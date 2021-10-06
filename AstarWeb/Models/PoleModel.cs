@@ -19,7 +19,113 @@ namespace AstarWeb.Models
         public int X { get; set; } //wspóżędna x
         public int Y { get; set; } // wspóżędna y
 
+        private int[] PolaSasiadujace;
+
+        public int[] getPolaSasiadujace(int DlugoscSiatki)
+        {
+            if (X % DlugoscSiatki == 1)//lewy bok
+            {
+                if (X == 1 && Y==1) // lewy górny róg
+                {
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki +1);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id +1);
+
+                    return PolaSasiadujace;
+                }
+
+                else if (X==1 && Y==DlugoscSiatki) // lewy górny róg
+                {
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki + 1);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + 1);
+
+                    return PolaSasiadujace;
+                }
+
+                else 
+                {
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki + 1);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + 1);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki + 1);
+
+                    return PolaSasiadujace;
+                }
+            }
+            else if (X % DlugoscSiatki == 0)//prawy bok
+            {
+                if (X == DlugoscSiatki && Y == 1)// prawy górny róg
+                {
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id -1);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki -1);
+                    
+                    return PolaSasiadujace;
+                }
+
+                else if (X == DlugoscSiatki && Y == DlugoscSiatki) // prawy dolny róg
+                {
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki -1);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - 1);
+
+                    return PolaSasiadujace;
+                }
+
+                else
+                {
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki - 1);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - 1);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki - 1);
+
+                    return PolaSasiadujace;
+                }
+            }
+            else if (Y % DlugoscSiatki == 1)//góra
+            {
+                PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + 1);
+                PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki + 1);
+                PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki);
+                PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki - 1);
+                PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - 1);
+
+                return PolaSasiadujace;
+            }
+            else if (Y % DlugoscSiatki == 0)//dół
+            {
+                PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - 1);
+                PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki - 1);
+                PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki);
+                PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki + 1);
+                PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + 1);
+
+                return PolaSasiadujace;
+            }
+            else
+            {
+
+                PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki);
+                PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki);
+                PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + 1);
+                PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - 1);
+                PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki - 1);
+                PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki + 1);
+                PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki - 1);
+                PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki + 1);
+
+                return PolaSasiadujace;
+            }
+
+
+        }
+            
+        }
+
+
 
 
     }
-}

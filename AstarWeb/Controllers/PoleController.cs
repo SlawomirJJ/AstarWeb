@@ -42,7 +42,10 @@ namespace AstarWeb.Controllers
             {
                 if (Pola[PolaPrzejrzane[i]].X % DlugoscSiatki==1)//lewy bok
                 {
+                    if(Pola[PolaPrzejrzane[i]].X ==1)
+                    {
 
+                    }
                 }
                 else if (Pola[PolaPrzejrzane[i]].X % DlugoscSiatki == 0)//prawy bok
                 {
