@@ -122,8 +122,8 @@ namespace AstarWeb.Controllers
                         //sprawdzenie czy danego pola nie ma w tablicy PolaPrzejrzane
                         for (int k = 0; k < PolaPrzejrzane.Length; k++)
                         {
-                            int[] TablicaSasiadow = poleNajnizszeF.GetPolaSasiadujace();
-                            if (PolaPrzejrzane[k].Id== TablicaSasiadow[k]) { }
+                            PoleModel[] TablicaSasiadow = poleNajnizszeF.GetPolaSasiadujace();
+                            if (PolaPrzejrzane[k].Id== TablicaSasiadow[k].Id) { }
                         }
                         }
                         
