@@ -21,7 +21,16 @@ namespace AstarWeb.Models
 
         private int[] PolaSasiadujace;
 
-        public int[] getPolaSasiadujace(int DlugoscSiatki)
+        public PoleModel(int DlugoscSiatki)
+        {
+            SetPolaSasiadujace(DlugoscSiatki);
+        }
+
+        public int[] GetPolaSasiadujace()
+        {
+            return PolaSasiadujace;
+        }
+        public void SetPolaSasiadujace(int DlugoscSiatki)
         {
             if (X % DlugoscSiatki == 1)//lewy bok
             {
@@ -31,7 +40,7 @@ namespace AstarWeb.Models
                     PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki +1);
                     PolaSasiadujace = (int[])PolaSasiadujace.Append(Id +1);
 
-                    return PolaSasiadujace;
+                    //return PolaSasiadujace;
                 }
 
                 else if (X==1 && Y==DlugoscSiatki) // lewy górny róg
@@ -40,7 +49,7 @@ namespace AstarWeb.Models
                     PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki + 1);
                     PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + 1);
 
-                    return PolaSasiadujace;
+                    //return PolaSasiadujace;
                 }
 
                 else 
@@ -51,7 +60,7 @@ namespace AstarWeb.Models
                     PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki);
                     PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki + 1);
 
-                    return PolaSasiadujace;
+                    //return PolaSasiadujace;
                 }
             }
             else if (X % DlugoscSiatki == 0)//prawy bok
@@ -62,7 +71,7 @@ namespace AstarWeb.Models
                     PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki);
                     PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki -1);
                     
-                    return PolaSasiadujace;
+                    //return PolaSasiadujace;
                 }
 
                 else if (X == DlugoscSiatki && Y == DlugoscSiatki) // prawy dolny róg
@@ -71,7 +80,7 @@ namespace AstarWeb.Models
                     PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki -1);
                     PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - 1);
 
-                    return PolaSasiadujace;
+                    //return PolaSasiadujace;
                 }
 
                 else
@@ -82,7 +91,7 @@ namespace AstarWeb.Models
                     PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki);
                     PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki - 1);
 
-                    return PolaSasiadujace;
+                    //return PolaSasiadujace;
                 }
             }
             else if (Y % DlugoscSiatki == 1)//góra
@@ -93,7 +102,7 @@ namespace AstarWeb.Models
                 PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki - 1);
                 PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - 1);
 
-                return PolaSasiadujace;
+                //return PolaSasiadujace;
             }
             else if (Y % DlugoscSiatki == 0)//dół
             {
@@ -103,7 +112,7 @@ namespace AstarWeb.Models
                 PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki + 1);
                 PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + 1);
 
-                return PolaSasiadujace;
+                //return PolaSasiadujace;
             }
             else
             {
@@ -117,7 +126,7 @@ namespace AstarWeb.Models
                 PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki - 1);
                 PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki + 1);
 
-                return PolaSasiadujace;
+                //return PolaSasiadujace;
             }
 
 
