@@ -16,93 +16,54 @@ namespace AstarWeb.Controllers
             for (int i = 1; i <= DlugoscSiatki*DlugoscSiatki; i++)
             {
                 if(i>10 && i<17)
-                Pola.Add(new PoleModel(100) { Id = i, Rodzic=0, G=1000, H=1000, StartKon='n', Osiagalny = false, X=i%DlugoscSiatki,Y=i%DlugoscSiatki,}) ;
+                Pola.Add(new PoleModel(i,0,0,0,DlugoscSiatki) { StartKon='n', Osiagalny = false }) ;
                 else if(i==3)
                 {
-                Pola.Add(new PoleModel(100) { Id = i, Rodzic = 0, G = 1000, H = 1000, StartKon = 's', Osiagalny = true, X = i % DlugoscSiatki, Y = i % DlugoscSiatki });
+                Pola.Add(new PoleModel(i, 0, 0, 0, DlugoscSiatki) { StartKon = 's', Osiagalny = true });
                 }
                 else if (i == 56)
                 {
-                    Pola.Add(new PoleModel(100) { Id = i, Rodzic = 0, G = 1000, H = 1000, StartKon = 'k', Osiagalny = true, X = i % DlugoscSiatki, Y = i % DlugoscSiatki });
+                    Pola.Add(new PoleModel(i, 0, 0, 0, DlugoscSiatki) { StartKon = 'k', Osiagalny = true });
                 }
                 else
                 {
-                    Pola.Add(new PoleModel(100) { Id = i, Rodzic = 0, G = 1000, H = 1000, StartKon = 'n', Osiagalny = true, X = i % DlugoscSiatki, Y = i % DlugoscSiatki });
+                    Pola.Add(new PoleModel(i, 0, 0, 0, DlugoscSiatki) { StartKon = 'n', Osiagalny = true });
                 }
 
             }
 
             return View(Pola);
         }
-        /*
-        int[] PrzyleglePola(int[] PolaPrzejrzane)
+
+
+
+
+
+
+        public IActionResult HandleButtonClick(PoleModel PoleS, PoleModel PoleK)
         {
-            int[] PolaNieodwiedzone=new int[DlugoscSiatki* DlugoscSiatki];
-            for (int i = 0; i < PolaPrzejrzane.Length; i++)
-            {
-                if (Pola[PolaPrzejrzane[i]].X % DlugoscSiatki==1)//lewy bok
-                {
-                    if(Pola[PolaPrzejrzane[i]].X ==1)
-                    {
+            // tablice przechowują pola
+            List<PoleModel> PolaPrzejrzane = new List<PoleModel>(new[] { PoleS });
+            List<PoleModel> PolaNieodwiedzoneSasiadujace = new List<PoleModel>();  // Zbiór wierzchołków nieodwiedzonych, sąsiadujących z odwiedzonymi. 
 
-                    }
-                }
-                else if (Pola[PolaPrzejrzane[i]].X % DlugoscSiatki == 0)//prawy bok
-                {
-                    
-                }
-                else if (Pola[PolaPrzejrzane[i]].Y % DlugoscSiatki == 1)//góra
-                {
+            PoleModel poleNajnizszeF = null; // przechowuje pole z najniższym F
 
-                }
-                else if (Pola[PolaPrzejrzane[i]].Y % DlugoscSiatki == 0)//dół
-                {
 
-                }
-                else
-                {
-                    //int[] NowePolaNieodwiedzone = new int[] { i - DlugoscSiatki, i + DlugoscSiatki, i + 1, i - 1, i - DlugoscSiatki - 1, i - DlugoscSiatki + 1, i + DlugoscSiatki - 1, i + DlugoscSiatki + 1 };
-
-                    PolaNieodwiedzone = (int[])PolaNieodwiedzone.Append(i - DlugoscSiatki);
-                    PolaNieodwiedzone = (int[])PolaNieodwiedzone.Append(i + DlugoscSiatki);
-                    PolaNieodwiedzone = (int[])PolaNieodwiedzone.Append(i + 1);
-                    PolaNieodwiedzone = (int[])PolaNieodwiedzone.Append(i - 1);
-                    PolaNieodwiedzone = (int[])PolaNieodwiedzone.Append(i - DlugoscSiatki - 1);
-                    PolaNieodwiedzone = (int[])PolaNieodwiedzone.Append(i - DlugoscSiatki + 1);
-                    PolaNieodwiedzone = (int[])PolaNieodwiedzone.Append(i + DlugoscSiatki - 1);
-                    PolaNieodwiedzone = (int[])PolaNieodwiedzone.Append(i + DlugoscSiatki + 1);
-                }
-                
-
-            }
-
-            return PolaNieodwiedzone;
-        }
-        */
-        public IActionResult HandleButtonClick( PoleModel PoleS, PoleModel PoleK)
-        {
-            // tablice przechowują Id pól
-            PoleModel[] PolaPrzejrzane=new PoleModel[] {PoleS };
-            PoleModel[] PolaNieodwiedzoneSasiadujace=new PoleModel[DlugoscSiatki * DlugoscSiatki]; // Zbiór wierzchołków nieodwiedzonych, sąsiadujących z odwiedzonymi.
-            
-            //double najnizszeF = double.PositiveInfinity; // przechowuje najniższe F
-            PoleModel poleNajnizszeF=null ; // przechowuje Id pola z najniższym F
-            
-            
 
             while (PolaNieodwiedzoneSasiadujace != null)
             {
-                for (int i = 0; i < PolaNieodwiedzoneSasiadujace.Length; i++)
+                for (int i = 0; i < PolaNieodwiedzoneSasiadujace.Count; i++)
                 {
                     if (i == 0)
                     {
                         poleNajnizszeF = PolaNieodwiedzoneSasiadujace[i];
+
                     }
                     else
-                    { 
-                       if (PolaNieodwiedzoneSasiadujace[i].G + PolaNieodwiedzoneSasiadujace[i].H < (poleNajnizszeF.G + poleNajnizszeF.H))//wybranie wierzchołka ze zbioru PolaNieodwiedzoneSasiadujace o najniższym F 
-                    
-                        poleNajnizszeF = PolaNieodwiedzoneSasiadujace[i];
+                    {
+                        if (PolaNieodwiedzoneSasiadujace[i].G + PolaNieodwiedzoneSasiadujace[i].H < (poleNajnizszeF.G + poleNajnizszeF.H))//wybranie wierzchołka ze zbioru PolaNieodwiedzoneSasiadujace o najniższym F 
+
+                            poleNajnizszeF = PolaNieodwiedzoneSasiadujace[i];
                     }
                     //sprawdzenie czy to węzęł końcowy
                     if (PolaNieodwiedzoneSasiadujace[i].Id == PoleK.Id)
@@ -111,43 +72,172 @@ namespace AstarWeb.Controllers
                     }
 
                     // usunięcie nowo sprawdzonego elementu z tablicy PolaNieodwiedzoneSasiadujace (zmienia Id pola na 0)
-                    Array.Clear(PolaNieodwiedzoneSasiadujace, i-1, 1);
+                    PolaNieodwiedzoneSasiadujace.Remove(PolaNieodwiedzoneSasiadujace[i]);
 
                     // dodanie nowo sprawdzonego elementu do tablicy PolaPrzejrzane
-                    PolaPrzejrzane = (PoleModel[])PolaPrzejrzane.Append(PolaNieodwiedzoneSasiadujace[i]);//dodajemy obiekt
+                    PolaPrzejrzane.Add(PolaNieodwiedzoneSasiadujace[i]);//dodajemy obiekt
 
-                    //przeszukujemy pola sąsiadujące z poleNajnizszeF
-                    for (int j = 0; j < poleNajnizszeF.GetPolaSasiadujace().Length; j++)
-                        {
+                    //przeszukujemy pola sąsiadujące z polem "poleNajnizszeF"
+                    for (int j = 0; j < poleNajnizszeF.PolaSasiadujace.Count; j++)
+                    {
                         //sprawdzenie czy danego pola nie ma w tablicy PolaPrzejrzane
-                        for (int k = 0; k < PolaPrzejrzane.Length; k++)
+                        for (int k = 0; k < PolaPrzejrzane.Count; k++)
                         {
-                            PoleModel[] TablicaSasiadow = poleNajnizszeF.GetPolaSasiadujace();
-                            if (PolaPrzejrzane[k].Id== TablicaSasiadow[k].Id) { }
-                        }
-                        }
-                        
-                    
+                            if (!(PolaPrzejrzane[k].Id == poleNajnizszeF.PolaSasiadujace[j]))
+                            {
+                                int tempG = PolaNieodwiedzoneSasiadujace[i].G + 10;//trzeba dodać czy po skosie !!!
 
+                                // jeżeli pole jest w tablicy PolaNieodwiedzoneSasiadujace to sprawdź czy nie dostaniesz się tam szybciej
+                                for (int l = 0; l < PolaNieodwiedzoneSasiadujace.Count; l++)
+                                {
+                                    if (PolaNieodwiedzoneSasiadujace[l].Id == Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].Id)
+                                    {
+                                        if (tempG < Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].G)
+                                        {
+                                            Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].G = tempG;
+                                        }
+                                    }
+                                    else // jeżeli nie ma w tab PolaNieodwiedzoneSasiadujace to dodaj iprzypisz tempG do G
+                                    {
+                                        Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].G = tempG;
+                                        PolaNieodwiedzoneSasiadujace.Add(Pola[poleNajnizszeF.PolaSasiadujace[j] - 1]);
+                                    }
+                                    // dodajemy heurystykę czyli oszacowaną odl z badanego pkt sąsiadującego do końca 
+                                    Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].H = heurystyka(Pola[poleNajnizszeF.PolaSasiadujace[j] - 1], PoleK);
+
+                                }
+                                
+                                
+                            }
+
+                        }
+
+
+
+
+                    }
+                    return View("Pole");
                 }
                 return View("Pole");
+
             }
-            return View("Pole");
+
+            static int heurystyka(PoleModel pkt, PoleModel koniec)
+            {
+                int a = koniec.X - pkt.X;
+                int b = koniec.Y - pkt.Y;
+                int H = (int)Math.Sqrt( (a * a) + (b * b));
+                return H;
+            }
+
+            /*
+            PoleModel[] PolaPrzylegle(PoleModel Obiekt ,int DlugoscSiatki)
+            {
+                if (Obiekt.X % DlugoscSiatki == 1)//lewy bok
+                {
+                    if (Obiekt.X == 1 && Obiekt.Y == 1) // lewy górny róg
+                    {
+                        Obiekt.PolaSasiadujace = (PoleModel[])Obiekt.PolaSasiadujace.Append(Obiekt.Id + DlugoscSiatki);
+                        Obiekt.PolaSasiadujace = (int[])PolaSasiadujace.Append(Obiekt.Id + DlugoscSiatki + 1);
+                        Obiekt.PolaSasiadujace = (int[])PolaSasiadujace.Append(Obiekt.Id + 1);
+
+                        //return PolaSasiadujace;
+                    }
+
+                    else if (Obiekt.X == 1 && Obiekt.Y == DlugoscSiatki) // lewy górny róg
+                    {
+                        PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki);
+                        PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki + 1);
+                        PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + 1);
+
+                        //return PolaSasiadujace;
+                    }
+
+                    else
+                    {
+                        PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki);
+                        PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki + 1);
+                        PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + 1);
+                        PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki);
+                        PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki + 1);
+
+                        //return PolaSasiadujace;
+                    }
+                }
+                else if (Obiekt.X % DlugoscSiatki == 0)//prawy bok
+                {
+                    if (Obiekt.X == DlugoscSiatki && Obiekt.Y == 1)// prawy górny róg
+                    {
+                        PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - 1);
+                        PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki);
+                        PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki - 1);
+
+                        //return PolaSasiadujace;
+                    }
+
+                    else if (Obiekt.X == DlugoscSiatki && Obiekt.Y == DlugoscSiatki) // prawy dolny róg
+                    {
+                        PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki);
+                        PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki - 1);
+                        PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - 1);
+
+                        //return PolaSasiadujace;
+                    }
+
+                    else
+                    {
+                        PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki);
+                        PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki - 1);
+                        PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - 1);
+                        PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki);
+                        PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki - 1);
+
+                        //return PolaSasiadujace;
+                    }
+                }
+                else if (Obiekt.Y % DlugoscSiatki == 1)//góra
+                {
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + 1);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki + 1);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki - 1);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - 1);
+
+                    //return PolaSasiadujace;
+                }
+                else if (Obiekt.Y % DlugoscSiatki == 0)//dół
+                {
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - 1);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki - 1);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki + 1);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + 1);
+
+                    //return PolaSasiadujace;
+                }
+                else
+                {
+
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + 1);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - 1);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki - 1);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id - DlugoscSiatki + 1);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki - 1);
+                    PolaSasiadujace = (int[])PolaSasiadujace.Append(Id + DlugoscSiatki + 1);
+
+                    //return PolaSasiadujace;
+                }
+
+            }
+            */
+
+
+
+
 
         }
-
-        
-
-
-
-
-
-
-
-
-
-
-
 
     }
 }
