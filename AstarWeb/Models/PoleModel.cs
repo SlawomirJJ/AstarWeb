@@ -12,10 +12,10 @@ namespace AstarWeb.Models
     {
         public int Id { get; set; }
         //public bool Otwarty { get; set; } //otwarty czy zamknięty (wokable)
-        public int Rodzic { get; set; }
+        public PoleModel Rodzic { get; set; }
         public int G { get; set; } //droga po między wierzchołkiem początkowym a x(tym)
         public int H { get; set; } //przewidywana przez heurystykę droga od x do wierzchołka docelowego
-       // public int F { get; set; } //funkcja F(x)=g(x)+h(x)
+        public int F { get; set; } //funkcja F(x)=g(x)+h(x)
         public char StartKon { get; set; }// "s"-startowy "k"-koncowy "n" -nie
 
         public bool Osiagalny { get; set; } //"o"-osiągalny "n"-nie osiągalny (wokable)
@@ -28,10 +28,10 @@ namespace AstarWeb.Models
         public List<int> PolaSasiadujace = new List<int>();
 
         
-        public PoleModel(int id, int rodzic, int g, int h,int DlugoscSiatki)
+        public PoleModel(int id, int g, int h,int DlugoscSiatki)
         {
             Id = id;
-            Rodzic = rodzic;
+            //Rodzic = rodzic;
             G = g;
             H = h;
 
