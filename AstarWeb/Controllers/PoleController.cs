@@ -94,32 +94,48 @@ namespace AstarWeb.Controllers
                             {   //trzeba dodać czy po skosie !!!                              
                                 
                                   int tempG =  poleNajnizszeF.G + 10;
-                                
-                            // jeżeli pole sąsiadujące jest w tablicy PolaNieodwiedzoneSasiadujace to sprawdź czy nie dostaniesz się tam szybciej
 
-                                for (int l = 0; l < PolaNieodwiedzoneSasiadujace.Count; l++) // 0 !!!!!
-                            {
-                                if (PolaNieodwiedzoneSasiadujace[l].Id == Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].Id)
-                                {// jeżeli można się dostać szybciej to zapisz to
-                                    if (tempG < Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].G)
+                                // jeżeli pole sąsiadujące jest w tablicy PolaNieodwiedzoneSasiadujace to sprawdź czy nie dostaniesz się tam szybciej
+
+
+                                bool zawiera=false;
+                                if (!(PolaNieodwiedzoneSasiadujace.Count==0))
+                                {
+                                    for (int l = 0; l < PolaNieodwiedzoneSasiadujace.Count; l++)
+                                    {
+                                        if (PolaNieodwiedzoneSasiadujace[l].Id == Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].Id)
+                                        {   // jeżeli można się dostać szybciej to zapisz to
+                                            if (tempG < Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].G)
+                                            {
+                                                Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].G = tempG;
+                                                Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].Rodzic = poleNajnizszeF;
+                                                Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].F = Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].G + Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].H;
+                                            }
+                                            // jeżeli  pole sąsiadujące jest w tablicy PolaNieodwiedzoneSasiadujace to zapisz to do zmiennej pomocniczej
+                                            zawiera = true;
+                                        }
+                                    }
+                                    if (zawiera !=true)// jeżeli nie ma w tab PolaNieodwiedzoneSasiadujace to dodaj i przypisz tempG do G
                                     {
                                         Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].G = tempG;
+                                        PolaNieodwiedzoneSasiadujace.Add(Pola[poleNajnizszeF.PolaSasiadujace[j] - 1]);
                                         Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].Rodzic = poleNajnizszeF;
                                         Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].F = Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].G + Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].H;
                                     }
+
                                 }
-                                else // jeżeli nie ma w tab PolaNieodwiedzoneSasiadujace to dodaj i przypisz tempG do G
+                                else // jeżeli nie ma w tab PolaNieodwiedzoneSasiadujace (nie na żadnych elementów w tablicy) to dodaj i przypisz tempG do G
                                 {
-                                    Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].G = tempG;
-                                    PolaNieodwiedzoneSasiadujace.Add(Pola[poleNajnizszeF.PolaSasiadujace[j] - 1]);
-                                    Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].Rodzic = poleNajnizszeF;
-                                    Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].F = Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].G + Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].H;
+                                            Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].G = tempG;
+                                            PolaNieodwiedzoneSasiadujace.Add(Pola[poleNajnizszeF.PolaSasiadujace[j] - 1]);
+                                            Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].Rodzic = poleNajnizszeF;
+                                            Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].F = Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].G + Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].H;
                                 }
+
                                 // dodajemy heurystykę czyli oszacowaną odl z badanego pkt sąsiadującego do końca 
                                 Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].H = Heurystyka(Pola[poleNajnizszeF.PolaSasiadujace[j] - 1], PoleK);
 
 
-                            }
 
 
                         }
@@ -132,7 +148,7 @@ namespace AstarWeb.Controllers
                 }
                 }
             }
-            return View("Pole");//error !!!
+            return View("Error"); //error !!!
         }
 
 
