@@ -57,50 +57,49 @@ namespace AstarWeb.Controllers
                 for (int i = 0; i < PolaNieodwiedzoneSasiadujace.Count; i++)
                 {
 
-                if (i == 0)
-                {
-                    poleNajnizszeF = PolaNieodwiedzoneSasiadujace[i];
-
-                }
-                else
-                {
-                    if (PolaNieodwiedzoneSasiadujace[i].G + PolaNieodwiedzoneSasiadujace[i].H < (poleNajnizszeF.G + poleNajnizszeF.H))//wybranie wierzchołka ze zbioru PolaNieodwiedzoneSasiadujace o najniższym F 
-
+                    if (i == 0)
+                    {
                         poleNajnizszeF = PolaNieodwiedzoneSasiadujace[i];
-                }
-                //sprawdzenie czy to węzęł końcowy
-                if (PolaNieodwiedzoneSasiadujace[i].Id == PoleK.Id)
-                {
-                    ViewBag.Sciezka=RekonstrukcjaSciezki(PoleS, PoleK);
-                    return View("Pole");
+
+                    }
+                    else
+                    {
+                        if (PolaNieodwiedzoneSasiadujace[i].G + PolaNieodwiedzoneSasiadujace[i].H < (poleNajnizszeF.G + poleNajnizszeF.H))//wybranie wierzchołka ze zbioru PolaNieodwiedzoneSasiadujace o najniższym F 
+
+                            poleNajnizszeF = PolaNieodwiedzoneSasiadujace[i];
+                    }
+                    //sprawdzenie czy to węzęł końcowy
+                    if (PolaNieodwiedzoneSasiadujace[i].Id == PoleK.Id)
+                    {
+                        ViewBag.Sciezka=RekonstrukcjaSciezki(PoleS, PoleK);
+                        return View("Pole");
                     
-                }
+                    }
 
-                 // dodanie nowo sprawdzonego elementu do tablicy PolaPrzejrzane
-                 PolaPrzejrzane.Add(PolaNieodwiedzoneSasiadujace[i]);//dodajemy obiekt
+                    // dodanie nowo sprawdzonego elementu do tablicy PolaPrzejrzane
+                    PolaPrzejrzane.Add(PolaNieodwiedzoneSasiadujace[i]);//dodajemy obiekt
 
-                 // usunięcie nowo sprawdzonego elementu z tablicy PolaNieodwiedzoneSasiadujace (zmienia Id pola na 0)
-                 PolaNieodwiedzoneSasiadujace.Remove(PolaNieodwiedzoneSasiadujace[i]);
+                    // usunięcie nowo sprawdzonego elementu z tablicy PolaNieodwiedzoneSasiadujace (zmienia Id pola na 0)
+                    PolaNieodwiedzoneSasiadujace.Remove(PolaNieodwiedzoneSasiadujace[i]);
 
                
 
-                //przeszukujemy pola sąsiadujące z polem "poleNajnizszeF"
-                for (int j = 0; j < poleNajnizszeF.PolaSasiadujace.Count; j++)
-                {
-                    //sprawdzenie czy danego pola sąsiadującego nie ma w tablicy PolaPrzejrzane
-                    for (int k = 0; k < PolaPrzejrzane.Count; k++)
+                    //przeszukujemy pola sąsiadujące z polem "poleNajnizszeF"
+                    for (int j = 0; j < poleNajnizszeF.PolaSasiadujace.Count; j++)
                     {
-                        if (!(PolaPrzejrzane[k].Id == poleNajnizszeF.PolaSasiadujace[j]))
+   /* Do poprawy */           //sprawdzenie czy danego pola sąsiadującego nie ma w tablicy PolaPrzejrzane
+                        for (int k = 0; k < PolaPrzejrzane.Count; k++)
+                        {
+    /* Do poprawy  */
+                            if (!(PolaPrzejrzane[k].Id == poleNajnizszeF.PolaSasiadujace[j]))
                             {   //trzeba dodać czy po skosie !!!                              
                                 
                                   int tempG =  poleNajnizszeF.G + 10;
 
-                                // jeżeli pole sąsiadujące jest w tablicy PolaNieodwiedzoneSasiadujace to sprawdź czy nie dostaniesz się tam szybciej
-
-
-                                bool zawiera=false;
+                                // jeżeli pole sąsiadujące jest w tablicy PolaNieodwiedzoneSasiadujace to sprawdź czy nie dostaniesz się tam szybciej                              
                                 if (!(PolaNieodwiedzoneSasiadujace.Count==0))
                                 {
+                                    bool zawiera = false;  // zmienna pomocnicza
                                     for (int l = 0; l < PolaNieodwiedzoneSasiadujace.Count; l++)
                                     {
                                         if (PolaNieodwiedzoneSasiadujace[l].Id == Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].Id)
@@ -138,14 +137,9 @@ namespace AstarWeb.Controllers
 
 
 
+                            }
                         }
-
                     }
-
-
-
-
-                }
                 }
             }
             return View("Error"); //error !!!
