@@ -59,7 +59,7 @@ for details on configuring this project to bundle and minify static web assets. 
 .PoleP {
     width: 70px;
     height: 70px;
-    background-color: darkblue;
+    background-color: red;
     color: white;
     float: left;
     margin: 5px;

@@ -11,17 +11,19 @@ namespace AstarWeb.Controllers
     {
         int DlugoscSiatki = 10;
         static List<PoleModel> Pola = new List<PoleModel>();
+        
         public IActionResult Pole()
         {
             for (int i = 1; i <= DlugoscSiatki * DlugoscSiatki; i++)
             {
+                ViewBag.Sciezka = null;
                 if (i > 10 && i < 17)
                     Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 'n', Osiagalny = false });
                 else if (i == 3)
                 {
                     Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 's', Osiagalny = true });
                 }
-                else if (i == 56)
+                else if (i == 76)
                 {
                     Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 'k', Osiagalny = true });
                 }
@@ -36,10 +38,10 @@ namespace AstarWeb.Controllers
         }
 
 
-        public void HandleButtonClick()
+        public IActionResult HandleButtonClick()
         {
-            Algorytm(Pola[3], Pola[56]);
-            //return View("Pole");
+            Algorytm(Pola[3], Pola[76]);
+            return View("Pole",Pola);
         }
 
 
@@ -72,7 +74,8 @@ namespace AstarWeb.Controllers
                     if (PolaNieodwiedzoneSasiadujace[i].Id == PoleK.Id)
                     {
                         ViewBag.Sciezka=RekonstrukcjaSciezki(PoleS, PoleK);
-                        return View("Pole");
+                        //break;
+                        return View("Pole",Pola);
                     
                     }
 
@@ -87,11 +90,8 @@ namespace AstarWeb.Controllers
                     //przeszukujemy pola sąsiadujące z polem "poleNajnizszeF"
                     for (int j = 0; j < poleNajnizszeF.PolaSasiadujace.Count; j++)
                     {
-   /* Do poprawy */           //sprawdzenie czy danego pola sąsiadującego nie ma w tablicy PolaPrzejrzane
-                        for (int k = 0; k < PolaPrzejrzane.Count; k++)
-                        {
-    /* Do poprawy  */
-                            if (!(PolaPrzejrzane[k].Id == poleNajnizszeF.PolaSasiadujace[j]))
+                     // sprawdzenie czy danego pola sąsiadującego nie ma w tablicy PolaPrzejrzane
+                            if (!(PolaPrzejrzane.Exists(x => x.Id == poleNajnizszeF.PolaSasiadujace[j])))
                             {   //trzeba dodać czy po skosie !!!                              
                                 
                                   int tempG =  poleNajnizszeF.G + 10;
@@ -138,7 +138,7 @@ namespace AstarWeb.Controllers
 
 
                             }
-                        }
+                        
                     }
                 }
             }
@@ -146,7 +146,7 @@ namespace AstarWeb.Controllers
         }
 
 
-        /////////////////////////////         FUNKCJE            //////////////////////////
+        /////////////////////////////         FUNKCJE            ////////////////////
  
         public static int Heurystyka(PoleModel pkt, PoleModel koniec)
         {
