@@ -56,7 +56,7 @@ namespace AstarWeb.Models
         {
             
 
-            if (X % DlugoscSiatki == 1)//lewy bok
+            if (X % DlugoscSiatki == 1)/////////////// lewy bok /////////////////////
             {
                 if (X == 1 && Y==1) // lewy górny róg
                 {
@@ -65,14 +65,14 @@ namespace AstarWeb.Models
                     PolaSasiadujace.Add(Id + 1);
                 }
 
-                else if (X==1 && Y==DlugoscSiatki) // lewy górny róg
+                else if (X==1 && Y==DlugoscSiatki) // lewy dolny róg
                 {
                     PolaSasiadujace.Add(Id - DlugoscSiatki);
                     PolaSasiadujace.Add(Id - DlugoscSiatki + 1);
                     PolaSasiadujace.Add(Id + 1);
                 }
 
-                else 
+                else // pozostałe na lewej krawędzi
                 {
                     PolaSasiadujace.Add(Id - DlugoscSiatki);
                     PolaSasiadujace.Add(Id - DlugoscSiatki + 1);
@@ -81,7 +81,7 @@ namespace AstarWeb.Models
                     PolaSasiadujace.Add(Id + DlugoscSiatki + 1);
                 }
             }
-            else if (X % DlugoscSiatki == 0)//prawy bok
+            else if (X % DlugoscSiatki == 0)/////////////  prawy bok   /////////////////////
             {
                 if (X == DlugoscSiatki && Y == 1)// prawy górny róg
                 {
@@ -97,7 +97,7 @@ namespace AstarWeb.Models
                     PolaSasiadujace.Add(Id - 1);
                 }
 
-                else
+                else // pozostałe na prawej krawędzi
                 {
                     PolaSasiadujace.Add(Id - DlugoscSiatki);
                     PolaSasiadujace.Add(Id - DlugoscSiatki - 1);
@@ -106,7 +106,7 @@ namespace AstarWeb.Models
                     PolaSasiadujace.Add(Id + DlugoscSiatki - 1);
                 }
             }
-            else if (Y % DlugoscSiatki == 1)//góra
+            else if (Y % DlugoscSiatki == 1)//////////////////  górna krawędź bez rogów   //////////////////
             {
                 PolaSasiadujace.Add(Id + 1);
                 PolaSasiadujace.Add(Id + DlugoscSiatki + 1);
@@ -114,7 +114,7 @@ namespace AstarWeb.Models
                 PolaSasiadujace.Add(Id + DlugoscSiatki - 1);
                 PolaSasiadujace.Add(Id - 1);
             }
-            else if (Y % DlugoscSiatki == 0)//dół
+            else if (Y % DlugoscSiatki == 0)////////////////    dolna krawędź bez rogów    /////////////////
             {
                 PolaSasiadujace.Add(Id - 1);
                 PolaSasiadujace.Add(Id - DlugoscSiatki - 1);
@@ -122,7 +122,7 @@ namespace AstarWeb.Models
                 PolaSasiadujace.Add(Id - DlugoscSiatki + 1);
                 PolaSasiadujace.Add(Id + 1);
             }
-            else
+            else    ////////////////////////////    Pozostałe pola w środku     /////////////////////////////
             {
                 PolaSasiadujace.Add(Id - DlugoscSiatki);
                 PolaSasiadujace.Add(Id + DlugoscSiatki);

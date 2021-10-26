@@ -23,7 +23,7 @@ namespace AstarWeb.Controllers
                 {
                     Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 's', Osiagalny = true });
                 }
-                else if (i == 76)
+                else if (i == 33)
                 {
                     Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 'k', Osiagalny = true });
                 }
@@ -40,7 +40,7 @@ namespace AstarWeb.Controllers
 
         public IActionResult HandleButtonClick()
         {
-            Algorytm(Pola[3], Pola[76]);
+            Algorytm(Pola[3], Pola[33]);
             return View("Pole",Pola);
         }
 
@@ -66,7 +66,7 @@ namespace AstarWeb.Controllers
                     }
                     else
                     {
-                        if (PolaNieodwiedzoneSasiadujace[i].G + PolaNieodwiedzoneSasiadujace[i].H < (poleNajnizszeF.G + poleNajnizszeF.H))//wybranie wierzchołka ze zbioru PolaNieodwiedzoneSasiadujace o najniższym F 
+                        if (PolaNieodwiedzoneSasiadujace[i].F < poleNajnizszeF.F)//wybranie wierzchołka ze zbioru PolaNieodwiedzoneSasiadujace o najniższym F 
 
                             poleNajnizszeF = PolaNieodwiedzoneSasiadujace[i];
                     }
@@ -92,9 +92,17 @@ namespace AstarWeb.Controllers
                     {
                      // sprawdzenie czy danego pola sąsiadującego nie ma w tablicy PolaPrzejrzane
                             if (!(PolaPrzejrzane.Exists(x => x.Id == poleNajnizszeF.PolaSasiadujace[j])))
-                            {   //trzeba dodać czy po skosie !!!                              
-                                
-                                  int tempG =  poleNajnizszeF.G + 10;
+                            {
+                               int tempG = 0;        // prawo, lewo, góra, dół
+                                if (poleNajnizszeF.Id+1== poleNajnizszeF.PolaSasiadujace[j] || poleNajnizszeF.Id - 1 == poleNajnizszeF.PolaSasiadujace[j] || poleNajnizszeF.Id + DlugoscSiatki == poleNajnizszeF.PolaSasiadujace[j] || poleNajnizszeF.Id - DlugoscSiatki == poleNajnizszeF.PolaSasiadujace[j])
+                                {
+                                    tempG = poleNajnizszeF.G + 10;
+                                }
+                                else // po skosie
+                                {
+                                    tempG = poleNajnizszeF.G + 14;
+                                }
+                                    
 
                                 // jeżeli pole sąsiadujące jest w tablicy PolaNieodwiedzoneSasiadujace to sprawdź czy nie dostaniesz się tam szybciej                              
                                 if (!(PolaNieodwiedzoneSasiadujace.Count==0))
@@ -108,6 +116,8 @@ namespace AstarWeb.Controllers
                                             {
                                                 Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].G = tempG;
                                                 Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].Rodzic = poleNajnizszeF;
+                                                // dodajemy heurystykę czyli oszacowaną odl z badanego pkt sąsiadującego do końca 
+                                                Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].H = Heurystyka(Pola[poleNajnizszeF.PolaSasiadujace[j] - 1], PoleK);
                                                 Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].F = Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].G + Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].H;
                                             }
                                             // jeżeli  pole sąsiadujące jest w tablicy PolaNieodwiedzoneSasiadujace to zapisz to do zmiennej pomocniczej
@@ -119,20 +129,21 @@ namespace AstarWeb.Controllers
                                         Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].G = tempG;
                                         PolaNieodwiedzoneSasiadujace.Add(Pola[poleNajnizszeF.PolaSasiadujace[j] - 1]);
                                         Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].Rodzic = poleNajnizszeF;
-                                        Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].F = Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].G + Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].H;
+                                    Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].H = Heurystyka(Pola[poleNajnizszeF.PolaSasiadujace[j] - 1], PoleK);
+                                    Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].F = Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].G + Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].H;
                                     }
 
                                 }
                                 else // jeżeli nie ma w tab PolaNieodwiedzoneSasiadujace (nie na żadnych elementów w tablicy) to dodaj i przypisz tempG do G
                                 {
-                                            Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].G = tempG;
-                                            PolaNieodwiedzoneSasiadujace.Add(Pola[poleNajnizszeF.PolaSasiadujace[j] - 1]);
-                                            Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].Rodzic = poleNajnizszeF;
-                                            Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].F = Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].G + Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].H;
+                                    Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].G = tempG;
+                                    PolaNieodwiedzoneSasiadujace.Add(Pola[poleNajnizszeF.PolaSasiadujace[j] - 1]);
+                                    Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].Rodzic = poleNajnizszeF; 
+                                    Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].H = Heurystyka(Pola[poleNajnizszeF.PolaSasiadujace[j] - 1], PoleK);
+                                    Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].F = Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].G + Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].H;
                                 }
 
-                                // dodajemy heurystykę czyli oszacowaną odl z badanego pkt sąsiadującego do końca 
-                                Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].H = Heurystyka(Pola[poleNajnizszeF.PolaSasiadujace[j] - 1], PoleK);
+                                
 
 
 
@@ -147,12 +158,12 @@ namespace AstarWeb.Controllers
 
 
         /////////////////////////////         FUNKCJE            ////////////////////
- 
+
         public static int Heurystyka(PoleModel pkt, PoleModel koniec)
         {
             int a = koniec.X - pkt.X;
             int b = koniec.Y - pkt.Y;
-            int H = (int)Math.Sqrt((a * a) + (b * b));
+            int H = (int)(10 * (Math.Sqrt((a * a) + (b * b))));
             return H;
         }
 
