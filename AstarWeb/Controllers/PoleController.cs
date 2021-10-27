@@ -17,13 +17,13 @@ namespace AstarWeb.Controllers
             for (int i = 1; i <= DlugoscSiatki * DlugoscSiatki; i++)
             {
                 ViewBag.Sciezka = null;
-                if (i > 10 && i < 17)
+             /*   if (i > 10 && i < 17)
                     Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 'n', Osiagalny = false });
-                else if (i == 3)
+                else */ if (i == 3)
                 {
                     Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 's', Osiagalny = true });
                 }
-                else if (i == 33)
+                else if (i == 50)
                 {
                     Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 'k', Osiagalny = true });
                 }
@@ -39,8 +39,8 @@ namespace AstarWeb.Controllers
 
 
         public IActionResult HandleButtonClick()
-        {
-            Algorytm(Pola[3], Pola[33]);
+        {   // Odejmujemy 1 bo bo id(zmienna wyżej "i") jest większe o 1
+            Algorytm(Pola[3-1], Pola[50-1]);
             return View("Pole",Pola);
         }
 
@@ -55,23 +55,23 @@ namespace AstarWeb.Controllers
 
 
             while (PolaNieodwiedzoneSasiadujace != null)
-            {
+            {   // wybranie wierzchołka ze zbioru PolaNieodwiedzoneSasiadujace o najniższym F 
                 for (int i = 0; i < PolaNieodwiedzoneSasiadujace.Count; i++)
                 {
-
-                    if (i == 0)
+                    if (i==0)
+                    {
+                        poleNajnizszeF = PolaNieodwiedzoneSasiadujace[0];
+                    }
+                    else if(PolaNieodwiedzoneSasiadujace[i].F < poleNajnizszeF.F)
                     {
                         poleNajnizszeF = PolaNieodwiedzoneSasiadujace[i];
-
                     }
-                    else
-                    {
-                        if (PolaNieodwiedzoneSasiadujace[i].F < poleNajnizszeF.F)//wybranie wierzchołka ze zbioru PolaNieodwiedzoneSasiadujace o najniższym F 
-
-                            poleNajnizszeF = PolaNieodwiedzoneSasiadujace[i];
-                    }
+                }       
+                    
+                        
+                    
                     //sprawdzenie czy to węzęł końcowy
-                    if (PolaNieodwiedzoneSasiadujace[i].Id == PoleK.Id)
+                    if (poleNajnizszeF.Id == PoleK.Id)
                     {
                         ViewBag.Sciezka=RekonstrukcjaSciezki(PoleS, PoleK);
                         //break;
@@ -80,10 +80,10 @@ namespace AstarWeb.Controllers
                     }
 
                     // dodanie nowo sprawdzonego elementu do tablicy PolaPrzejrzane
-                    PolaPrzejrzane.Add(PolaNieodwiedzoneSasiadujace[i]);//dodajemy obiekt
+                    PolaPrzejrzane.Add(poleNajnizszeF);//dodajemy obiekt
 
                     // usunięcie nowo sprawdzonego elementu z tablicy PolaNieodwiedzoneSasiadujace (zmienia Id pola na 0)
-                    PolaNieodwiedzoneSasiadujace.Remove(PolaNieodwiedzoneSasiadujace[i]);
+                    PolaNieodwiedzoneSasiadujace.Remove(poleNajnizszeF);
 
                
 
@@ -110,7 +110,7 @@ namespace AstarWeb.Controllers
                                     bool zawiera = false;  // zmienna pomocnicza
                                     for (int l = 0; l < PolaNieodwiedzoneSasiadujace.Count; l++)
                                     {
-                                        if (PolaNieodwiedzoneSasiadujace[l].Id == Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].Id)
+                                    if (PolaNieodwiedzoneSasiadujace[l].Id == poleNajnizszeF.PolaSasiadujace[j])
                                         {   // jeżeli można się dostać szybciej to zapisz to
                                             if (tempG < Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].G)
                                             {
@@ -126,7 +126,7 @@ namespace AstarWeb.Controllers
                                     }
                                     if (zawiera !=true)// jeżeli nie ma w tab PolaNieodwiedzoneSasiadujace to dodaj i przypisz tempG do G
                                     {
-                                        Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].G = tempG;
+                                        Pola[(poleNajnizszeF.PolaSasiadujace[j]) - 1].G = tempG;
                                         PolaNieodwiedzoneSasiadujace.Add(Pola[poleNajnizszeF.PolaSasiadujace[j] - 1]);
                                         Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].Rodzic = poleNajnizszeF;
                                     Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].H = Heurystyka(Pola[poleNajnizszeF.PolaSasiadujace[j] - 1], PoleK);
@@ -151,7 +151,7 @@ namespace AstarWeb.Controllers
                             }
                         
                     }
-                }
+                
             }
             return View("Error"); //error !!!
         }
