@@ -19,11 +19,11 @@ namespace AstarWeb.Controllers
                 ViewBag.Sciezka = null;
              /*   if (i > 10 && i < 17)
                     Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 'n', Osiagalny = false });
-                else */ if (i == 3)
+                else */ if (i == 1)
                 {
                     Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 's', Osiagalny = true });
                 }
-                else if (i == 50)
+                else if (i == 80)
                 {
                     Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 'k', Osiagalny = true });
                 }
@@ -40,7 +40,7 @@ namespace AstarWeb.Controllers
 
         public IActionResult HandleButtonClick()
         {   // Odejmujemy 1 bo bo id(zmienna wyżej "i") jest większe o 1
-            Algorytm(Pola[3-1], Pola[50-1]);
+            Algorytm(Pola[1-1], Pola[80-1]);
             return View("Pole",Pola);
         }
 

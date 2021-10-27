@@ -40,7 +40,7 @@ namespace AstarWeb.Models
 
             for(int i=1; i<=DlugoscSiatki; i++ )
             {
-                if (Id < DlugoscSiatki * i && Id > DlugoscSiatki * (i-1)) Y = i;
+                if (Id <= DlugoscSiatki * i && Id > DlugoscSiatki * (i-1)) Y = i;
             }
             
             SetPolaSasiadujace(Id,DlugoscSiatki);
