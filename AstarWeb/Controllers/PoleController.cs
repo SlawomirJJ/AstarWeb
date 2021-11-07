@@ -17,13 +17,13 @@ namespace AstarWeb.Controllers
             for (int i = 1; i <= DlugoscSiatki * DlugoscSiatki; i++)
             {
                 ViewBag.Sciezka = null;
-             /*   if (i > 10 && i < 17)
+                if (i > 10 && i <16)
                     Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 'n', Osiagalny = false });
-                else */ if (i == 1)
+                else  if (i == 1)
                 {
                     Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 's', Osiagalny = true });
                 }
-                else if (i == 80)
+                else if (i == 91)
                 {
                     Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 'k', Osiagalny = true });
                 }
@@ -39,8 +39,8 @@ namespace AstarWeb.Controllers
 
 
         public IActionResult HandleButtonClick()
-        {   // Odejmujemy 1 bo bo id(zmienna wyżej "i") jest większe o 1
-            Algorytm(Pola[1-1], Pola[80-1]);
+        {   // Odejmujemy 1 bo id(zmienna wyżej "i") jest większe o 1
+            Algorytm(Pola[1-1], Pola[91-1]);
             return View("Pole",Pola);
         }
 
@@ -82,16 +82,14 @@ namespace AstarWeb.Controllers
                     // dodanie nowo sprawdzonego elementu do tablicy PolaPrzejrzane
                     PolaPrzejrzane.Add(poleNajnizszeF);//dodajemy obiekt
 
-                    // usunięcie nowo sprawdzonego elementu z tablicy PolaNieodwiedzoneSasiadujace (zmienia Id pola na 0)
-                    PolaNieodwiedzoneSasiadujace.Remove(poleNajnizszeF);
-
-               
+                    // usunięcie nowo sprawdzonego elementu z tablicy PolaNieodwiedzoneSasiadujace 
+                    PolaNieodwiedzoneSasiadujace.Remove(poleNajnizszeF);               
 
                     //przeszukujemy pola sąsiadujące z polem "poleNajnizszeF"
                     for (int j = 0; j < poleNajnizszeF.PolaSasiadujace.Count; j++)
                     {
                      // sprawdzenie czy danego pola sąsiadującego nie ma w tablicy PolaPrzejrzane
-                            if (!(PolaPrzejrzane.Exists(x => x.Id == poleNajnizszeF.PolaSasiadujace[j])))
+                            if (!(PolaPrzejrzane.Exists(x => x.Id == poleNajnizszeF.PolaSasiadujace[j])) &&  Pola[poleNajnizszeF.PolaSasiadujace[j]-1].Osiagalny!=false)
                             {
                                int tempG = 0;        // prawo, lewo, góra, dół
                                 if (poleNajnizszeF.Id+1== poleNajnizszeF.PolaSasiadujace[j] || poleNajnizszeF.Id - 1 == poleNajnizszeF.PolaSasiadujace[j] || poleNajnizszeF.Id + DlugoscSiatki == poleNajnizszeF.PolaSasiadujace[j] || poleNajnizszeF.Id - DlugoscSiatki == poleNajnizszeF.PolaSasiadujace[j])
@@ -167,10 +165,10 @@ namespace AstarWeb.Controllers
             return H;
         }
 
-        public static List<PoleModel> Sciezka = new();
+        
         public static List<PoleModel> RekonstrukcjaSciezki(PoleModel PunktStartowy, PoleModel PunktKoncowy)
         {
-            
+            List<PoleModel> Sciezka = new(new[] { PunktKoncowy });
             while (PunktKoncowy != PunktStartowy)
             {
                 Sciezka.Add(PunktKoncowy.Rodzic);
