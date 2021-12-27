@@ -19,27 +19,45 @@ namespace AstarWeb.Controllers
         public IActionResult Pole()
         {
             Pola.Clear();
-            bool result = int.TryParse(s, out i);
-            if (DlugoscSiatki )
+            if (DlugoscSiatki==0 )
             {
+                for (int i = 1; i <= DLUGOSC_SIATKI * DLUGOSC_SIATKI; i++)
+                {
+                    if (i == start)
+                    {
+                        Pola.Add(new PoleModel(i, 0, 0, DLUGOSC_SIATKI) { StartKon = 's', Osiagalny = true });
+                    }
+                    else if (i == koniec)
+                    {
+                        Pola.Add(new PoleModel(i, 0, 0, DLUGOSC_SIATKI) { StartKon = 'k', Osiagalny = true });
+                    }
+                    else
+                    {
+                        Pola.Add(new PoleModel(i, 0, 0, DLUGOSC_SIATKI) { StartKon = 'n', Osiagalny = true });
+                    }
 
+                }
             }
-            for (int i = 1; i <= DlugoscSiatki * DlugoscSiatki; i++)
+            else 
             {
-                if (i == start)
+                for (int i = 1; i <= DlugoscSiatki * DlugoscSiatki; i++)
                 {
-                    Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 's', Osiagalny = true });
-                }
-                else if (i == koniec)
-                {
-                    Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 'k', Osiagalny = true });
-                }
-                else
-                {
-                    Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 'n', Osiagalny = true });
-                }
+                    if (i == start)
+                    {
+                        Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 's', Osiagalny = true });
+                    }
+                    else if (i == koniec)
+                    {
+                        Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 'k', Osiagalny = true });
+                    }
+                    else
+                    {
+                        Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 'n', Osiagalny = true });
+                    }
 
+                }
             }
+            
 
             return View(Pola);
         }
