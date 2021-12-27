@@ -9,21 +9,28 @@ namespace AstarWeb.Controllers
 {
     public class PoleController : Controller
     {
-        int DlugoscSiatki = 10;
+        // mpublic bool flaga;
+        const int DLUGOSC_SIATKI=10;
+        int DlugoscSiatki;
         static List<PoleModel> Pola = new List<PoleModel>();
-        
+        int start = 1;
+        int koniec = 91;
+
         public IActionResult Pole()
         {
+            Pola.Clear();
+            bool result = int.TryParse(s, out i);
+            if (DlugoscSiatki )
+            {
+
+            }
             for (int i = 1; i <= DlugoscSiatki * DlugoscSiatki; i++)
             {
-                ViewBag.Sciezka = null;
-                if (i > 10 && i <16)
-                    Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 'n', Osiagalny = false });
-                else  if (i == 1)
+                if (i == start)
                 {
                     Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 's', Osiagalny = true });
                 }
-                else if (i == 91)
+                else if (i == koniec)
                 {
                     Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 'k', Osiagalny = true });
                 }
@@ -38,10 +45,50 @@ namespace AstarWeb.Controllers
         }
 
 
-        public IActionResult HandleButtonClick()
+        /////////////////////////////////////      PRZYCISKI        //////////////////////////////
+        
+        public IActionResult HandleButtonClickWyznaczenieTrasy()
         {   // Odejmujemy 1 bo id(zmienna wyżej "i") jest większe o 1
-            Algorytm(Pola[1-1], Pola[91-1]);
+            Algorytm(Pola[start-1], Pola[koniec-1]);
             return View("Pole",Pola);
+        }
+
+        public IActionResult HandleButtonClickPrzeszkody()
+        {
+            var rand = new Random();
+            for (int i = 0; i < rand.Next(1, (DlugoscSiatki* DlugoscSiatki)/2); i++)
+            {
+                int Nrprzeszkody=rand.Next(1, DlugoscSiatki * DlugoscSiatki);
+                if (Nrprzeszkody != start && Nrprzeszkody != koniec)
+                {
+                    Pola[Nrprzeszkody].Osiagalny = false;
+                }
+
+                
+            }
+            
+            return  View("Pole", Pola);
+        }
+
+        public IActionResult HandleButtonClickReset()
+        {
+            for (int i = 0; i < DlugoscSiatki*DlugoscSiatki; i++)
+            {
+                Pola[i].Osiagalny = true;
+            }
+            ViewBag.Sciezka = null;
+            Pole();
+            return View("Pole");
+        }
+
+ 
+        public IActionResult PobierzDlsiatki(int Dl)
+        {
+            DlugoscSiatki = Dl;
+            ViewBag.DlugoscSiatki = Dl;
+            //return View("Pole", Pola);
+            Pole();
+            return View("Pole");
         }
 
 
@@ -74,8 +121,8 @@ namespace AstarWeb.Controllers
                     if (poleNajnizszeF.Id == PoleK.Id)
                     {
                         ViewBag.Sciezka=RekonstrukcjaSciezki(PoleS, PoleK);
-                        //break;
-                        return View("Pole",Pola);
+                        break;
+                        //return View("Pole",Pola);
                     
                     }
 
@@ -88,7 +135,7 @@ namespace AstarWeb.Controllers
                     //przeszukujemy pola sąsiadujące z polem "poleNajnizszeF"
                     for (int j = 0; j < poleNajnizszeF.PolaSasiadujace.Count; j++)
                     {
-                     // sprawdzenie czy danego pola sąsiadującego nie ma w tablicy PolaPrzejrzane
+                     // sprawdzenie czy danego pola sąsiadującego nie ma w tablicy PolaPrzejrzanec
                             if (!(PolaPrzejrzane.Exists(x => x.Id == poleNajnizszeF.PolaSasiadujace[j])) &&  Pola[poleNajnizszeF.PolaSasiadujace[j]-1].Osiagalny!=false)
                             {
                                int tempG = 0;        // prawo, lewo, góra, dół

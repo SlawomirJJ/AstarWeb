@@ -21,8 +21,6 @@ namespace AstarWeb.Models
         public int X { get; set; } //współrzędna x
         public int Y { get; set; } // współrzędna y
 
-        //private int[] PolaSasiadujace;
-        //public int[] PolaSasiadujace { get; set; } = new int[8];
 
         public List<int> PolaSasiadujace = new List<int>();
 
@@ -30,7 +28,6 @@ namespace AstarWeb.Models
         public PoleModel(int id, int g, int h,int DlugoscSiatki)
         {
             Id = id;
-            //Rodzic = rodzic;
             G = g;
             H = h;
 
@@ -45,16 +42,10 @@ namespace AstarWeb.Models
             SetPolaSasiadujace(Id,DlugoscSiatki);
         }
         
-       /* public int[] GetPolaSasiadujace()
-        {
-            return PolaSasiadujace;
-        }*/
 
         
         public void SetPolaSasiadujace(int Id,int DlugoscSiatki)
         {
-            
-
             if (X % DlugoscSiatki == 1)/////////////// lewy bok /////////////////////
             {
                 if (X == 1 && Y==1) // lewy górny róg
