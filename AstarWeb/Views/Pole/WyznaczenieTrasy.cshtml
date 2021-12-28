@@ -1,25 +1,72 @@
-﻿@model AstarWeb.Models.PoleModel
+﻿@model IEnumerable<AstarWeb.Models.PoleModel>
 
-@if (ViewBag.Sciezka != null)
+@for (int i = 0; i < Model.Count(); i++)
 {
-    bool dodaniePola = false;
-    for (int j = 0; j < ViewBag.Sciezka.Count; j++)
+    @if (ViewBag.DlugoscSiatki == null)
     {
-
-        if (Model.ElementAt(i).Id == ViewBag.Sciezka[j].Id)
-        {
-            dodaniePola = true;
-            <div id="Model.ElementAt(i).Id" class="Sciezka">
-                <div class="G">@Html.DisplayFor(modelItem => Model.ElementAt(i).G)</div>
-                <div class="H">@Html.DisplayFor(modelItem => Model.ElementAt(i).H)</div>
-                <div class="Rodzic"> Id= @Html.DisplayFor(modelItem => Model.ElementAt(i).Id) </div>
-            </div>
-        }
+        ViewBag.DlugoscSiatki = 10;
+    }// modulo z DlugoscSiatki
+    @if (i % ViewBag.DlugoscSiatki == 0)
+    {
+        <div style="clear:both"></div>
     }
-    if (dodaniePola == true)
+    @if (Model.ElementAt(i).StartKon == 's')
     {
+        <button class="PoleS" value="@Model.ElementAt(i).Id" id="@Model.ElementAt(i).Id">
+            <div class="G">@Html.DisplayFor(modelItem => @Model.ElementAt(i).G)</div>
+            <div class="H">@Html.DisplayFor(modelItem => Model.ElementAt(i).H)</div>
 
+            <div class="Rodzic"> Id= "@Model.ElementAt(i).Id" </div>
+        </button>
         continue;
     }
+    @if (Model.ElementAt(i).StartKon == 'k')
+    {
+        <button class="PoleK" value="@Model.ElementAt(i).Id" id="@Model.ElementAt(i).Id">
+
+            <div class="G">@Html.DisplayFor(modelItem => @Model.ElementAt(i).G)</div>
+            <div class="H">@Html.DisplayFor(modelItem => @Model.ElementAt(i).H)</div>
+
+            <div class="Rodzic"> Id= @Model.ElementAt(i).Id </div>
+        </button>
+        continue;
+    }
+    @if (ViewBag.Sciezka != null)
+    {
+        bool dodaniePola = false;
+        for (int j = 0; j < ViewBag.Sciezka.Count; j++)
+        {
+            if (Model.ElementAt(i).Id == ViewBag.Sciezka[j].Id)
+            {
+                dodaniePola = true;
+                <div id="nr" class="Sciezka">
+                    <div class="G">@Html.DisplayFor(modelItem => Model.ElementAt(i).G)</div>
+                    <div class="H">@Html.DisplayFor(modelItem => Model.ElementAt(i).H)</div>
+                    <div class="Rodzic"> Id= @Html.DisplayFor(modelItem => Model.ElementAt(i).Id) </div>
+                </div>
+            }
+        }
+        if (dodaniePola == true)
+        {
+            continue;
+        }
+    }
+    if (Model.ElementAt(i).Osiagalny == true)
+    {
+        <div class="oneButton" id="@Model.ElementAt(i).Id">
+            <button class="PoleBtn" value="@Model.ElementAt(i).Id">
+
+                <div class="G">@Html.DisplayFor(modelItem => Model.ElementAt(i).G)</div>
+                <div class="H">@Html.DisplayFor(modelItem => Model.ElementAt(i).H)</div>
+
+                <div class="Rodzic"> Id= @Html.DisplayFor(modelItem => Model.ElementAt(i).Id) </div>
+
+
+            </button>
+        </div>
+        continue;
+    }
+
+
 
 }

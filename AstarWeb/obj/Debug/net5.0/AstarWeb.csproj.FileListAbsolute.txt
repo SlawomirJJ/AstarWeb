@@ -117,3 +117,4 @@ D:\Dokumenty\studia\PracaDyplomowa\AstarWeb\AstarWeb\bin\Debug\net5.0\runtimes\w
 D:\Dokumenty\studia\PracaDyplomowa\AstarWeb\AstarWeb\obj\Debug\net5.0\Razor\Views\Pole\Pole.cshtml.g.cs
 D:\Dokumenty\studia\PracaDyplomowa\AstarWeb\AstarWeb\obj\Debug\net5.0\Razor\Views\Pole\PoleStart.cshtml.g.cs
 D:\Dokumenty\studia\PracaDyplomowa\AstarWeb\AstarWeb\obj\Debug\net5.0\Razor\Views\Pole\PoleKoniec.cshtml.g.cs
+D:\Dokumenty\studia\PracaDyplomowa\AstarWeb\AstarWeb\obj\Debug\net5.0\Razor\Views\Pole\WyznaczenieTrasy.cshtml.g.cs

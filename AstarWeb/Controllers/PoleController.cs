@@ -17,8 +17,8 @@ namespace AstarWeb.Controllers
         const int DLUGOSC_SIATKI=10;
         int DlugoscSiatki;
         static List<PoleModel> Pola = new List<PoleModel>();
-        int start = 1;
-        int koniec = 91;
+        PoleModel start;
+        PoleModel koniec; 
 
         public IActionResult Pole()
         {
@@ -26,7 +26,7 @@ namespace AstarWeb.Controllers
             if (DlugoscSiatki==0 )
             {
                 for (int i = 1; i <= DLUGOSC_SIATKI * DLUGOSC_SIATKI; i++)
-                {
+                {/*
                     if (i == start)
                     {
                         Pola.Add(new PoleModel(i, 0, 0, DLUGOSC_SIATKI) { StartKon = 's', Osiagalny = true });
@@ -35,17 +35,18 @@ namespace AstarWeb.Controllers
                     {
                         Pola.Add(new PoleModel(i, 0, 0, DLUGOSC_SIATKI) { StartKon = 'k', Osiagalny = true });
                     }
-                    else
-                    {
+                    else */
+
+                    //{
                         Pola.Add(new PoleModel(i, 0, 0, DLUGOSC_SIATKI) { StartKon = 'n', Osiagalny = true });
-                    }
+                    //}
 
                 }
             }
             else 
             {
                 for (int i = 1; i <= DlugoscSiatki * DlugoscSiatki; i++)
-                {
+                {/*
                     if (i == start)
                     {
                         Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 's', Osiagalny = true });
@@ -54,10 +55,10 @@ namespace AstarWeb.Controllers
                     {
                         Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 'k', Osiagalny = true });
                     }
-                    else
-                    {
+                    else */
+                    //{
                         Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 'n', Osiagalny = true });
-                    }
+                    //}
 
                 }
             }
@@ -68,13 +69,13 @@ namespace AstarWeb.Controllers
 
 
         /////////////////////////////////////      PRZYCISKI        //////////////////////////////
-        
+        /*
         public IActionResult HandleButtonClickWyznaczenieTrasy()
         {   // Odejmujemy 1 bo id(zmienna wyżej "i") jest większe o 1
             Algorytm(Pola[start-1], Pola[koniec-1]);
             return View("Pole",Pola);
         }
-
+        
         public IActionResult HandleButtonClickPrzeszkody()
         {
             var rand = new Random();
@@ -91,7 +92,7 @@ namespace AstarWeb.Controllers
             
             return  View("Pole", Pola);
         }
-
+        */
         public IActionResult HandleButtonClickReset()
         {
             for (int i = 0; i < DlugoscSiatki*DlugoscSiatki; i++)
@@ -117,19 +118,33 @@ namespace AstarWeb.Controllers
         {
             
             Pola.ElementAt(StartId - 1).StartKon = 's';
+            //start = StartId;
             return PartialView("PoleStart", Pola.ElementAt(StartId - 1));
         }
 
         public IActionResult PoleKoniec(int KoniecId)
         {
             Pola.ElementAt(KoniecId - 1).StartKon = 'k';
+            //koniec = KoniecId;
             return PartialView("PoleKoniec", Pola.ElementAt(KoniecId - 1));
         }
 
         public IActionResult WyznaczenieTrasy()
         {
-            {   // Odejmujemy 1 bo id(zmienna wyżej "i") jest większe o 1
-                Algorytm(Pola[start - 1], Pola[koniec - 1]);
+            {
+                for (int i = 0; i < Pola.Count; i++)
+                {
+                    if (Pola.ElementAt(i).StartKon=='s')
+                    {
+                        start = Pola.ElementAt(i);
+                    }
+                    else if (Pola.ElementAt(i).StartKon == 'k')
+                    {
+                        koniec = Pola.ElementAt(i);
+                    }
+                }
+                
+                Algorytm(start, koniec);
                 return PartialView("WyznaczenieTrasy", Pola);
             }
         }

@@ -4,6 +4,7 @@
 // Write your JavaScript code.
 $(function () {
     console.log("Page is ready");
+     /////////////          Punkt Startowy           //////////////////////
     $(document).on("click", ".pktStartowy", function (event) {
         var flaga = true;
         
@@ -39,7 +40,7 @@ $(function () {
     }
 
 
-
+    /////////////          Punkt końcowy           //////////////////////
     $(document).on("click", ".pktKoncowy", function (event) {
         var flaga = true;
         console.log("Wciśnięto przycisk koniec");
@@ -76,8 +77,32 @@ $(function () {
 
 
 
+     /////////////          Wyznaczenie trasy           //////////////////////
+    $(document).on("click", ".WyznaczenieTrasy", function (event) {
+            event.preventDefault();
+                //var Pola = $(this).val();
+                //console.log("pole " + StartId + " zostało kliknięte");
+            WyznaczenieTrasy();
+        })
 
 
+    function WyznaczenieTrasy() {
+        console.log("w funkcji wyznaczenieTrasy");
+        $.ajax({
+            datatype: "json",
+            method: 'POST',
+            url: '/Pole/WyznaczenieTrasy',
+            //data: {
+            //    "Pola": Pola
+            //},
+            success: function (data) {
+                console.log(data);
+                $(".Siatka").html(data);
+            }
+        })
+
+        console.log(" koniec wyznaczania trasy");
+    }
 
 
 })
