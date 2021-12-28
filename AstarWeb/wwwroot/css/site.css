@@ -1,6 +1,15 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+.PoleBtn {
+    width: 70px;
+    height: 70px;
+    background-color: black;
+    color: white;
+    float: left;
+    margin: 5px;
+    position: relative
+}
 
 .G {
     float: left;

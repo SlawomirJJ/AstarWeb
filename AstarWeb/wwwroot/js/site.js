@@ -4,12 +4,28 @@
 // Write your JavaScript code.
 $(function () {
     console.log("Page is ready");
-    $(".Pole").click(function (event) {
+    $(document).on("click",".PoleBtn",function (event) {
         event.preventDefault();
-        console.log("button was clicked");
-        var poleId = $(this).attr('data-variableid2');
-        //var poleId = document.getelementsbyclassname('demo').getAttribute('data-value');
-        //var poleId = element.getAttribute('data-myValue');
-        console.log("pole " + poleId + " zostało kliknięte")
+        var poleId = $(this).val();
+        console.log("pole " + poleId + " zostało kliknięte");
+        doButtonUpdate(poleId);
     })
+
+    function doButtonUpdate(poleId) {
+        console.log("pole " + poleId + " w funkcji doButtonUpdate");
+        $.ajax({
+            datatype: "json",
+            method: 'POST',
+            url: '/Pole/PoleStart',
+            data: {
+                "poleId": poleId
+            },
+            success: function (data) {
+                console.log(data);
+                $("#" + poleId).html(data);
+            }
+        })
+
+        console.log("pole " + poleId + " koniec");
+    }
 })

@@ -1,7 +1,11 @@
 ﻿using AstarWeb.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -109,6 +113,54 @@ namespace AstarWeb.Controllers
             return View("Pole");
         }
 
+        public IActionResult PoleStart(int poleId)
+        {
+            Pola.ElementAt(poleId - 1).StartKon = 's';
+            return PartialView("PoleStart", Pola.ElementAt(poleId - 1));
+        }
+
+        /*
+                public IActionResult PoleStart(int poleId)
+                {
+                    string PoleNaCzarneString=null;
+                    for (int i = 0; i < Pola.Count; i++)
+                    {
+                        if (Pola.ElementAt(i).StartKon == 's')
+                        {
+                            Pola.ElementAt(i).StartKon = 'n';
+                            //return PartialView(Pola.ElementAt(i));
+                            PoleNaCzarneString = RenderRazorViewToString(this, "PoleCzarne", Pola.ElementAt(i));
+                        }
+                    }
+
+                    Pola.ElementAt(poleId -1).StartKon = 's';
+                    string PoleNaZieloneString = RenderRazorViewToString(this, "PoleStart", Pola.ElementAt(poleId - 1));
+
+                    var package = new { part1 = PoleNaCzarneString, part2 = PoleNaZieloneString,  };
+                    return Json(package);
+                }
+
+                public static string RenderRazorViewToString(Controller controller, string viewName, object model=null)
+                {
+                    controller.ViewData.Model = model;
+                    using(var sw=new StringWriter())
+                    {
+                        IViewEngine viewEngine = controller.HttpContext.RequestServices.GetService(typeof(ICompositeViewEngine)) as ICompositeViewEngine;
+                        ViewEngineResult viewResult = viewEngine.FindView(controller.ControllerContext, viewName, false);
+
+                        ViewContext viewContext = new ViewContext(
+                            controller.ControllerContext,
+                            viewResult.View,
+                            controller.ViewData,
+                            controller.TempData,
+                            sw,
+                            new HtmlHelperOptions()
+                            );
+                        viewResult.View.RenderAsync(viewContext);
+                        return sw.GetStringBuilder().ToString();
+                    }
+                }
+        */
 
         //////////////////////////////           ALGORYTM       //////////////////////////////
         public IActionResult Algorytm(PoleModel PoleS, PoleModel PoleK)

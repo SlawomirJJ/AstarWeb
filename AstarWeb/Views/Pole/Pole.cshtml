@@ -48,21 +48,10 @@
 
     }
 
-    if (Model.ElementAt(i).StartKon == 's')
-    {
-        <div id="@i" class="PoleS">
-
-            <div class="G">@Html.DisplayFor(modelItem => Model.ElementAt(i).G)</div>
-            <div class="H">@Html.DisplayFor(modelItem => Model.ElementAt(i).H)</div>
-
-            <div class="Rodzic"> Id= @Html.DisplayFor(modelItem => Model.ElementAt(i).Id) </div>
-
-        </div>
-        continue;
-    }
+    
     if (Model.ElementAt(i).StartKon == 'k')
     {
-        <div id="@i" class="PoleK">
+        <div id="Model.ElementAt(i).Id" class="PoleK">
 
             <div class="G">@Html.DisplayFor(modelItem => Model.ElementAt(i).G)</div>
             <div class="H">@Html.DisplayFor(modelItem => Model.ElementAt(i).H)</div>
@@ -82,7 +71,7 @@
             if (Model.ElementAt(i).Id == ViewBag.Sciezka[j].Id)
             {
                 dodaniePola = true;
-                <div id="nr" class="Sciezka">
+                <div id="Model.ElementAt(i).Id" class="Sciezka">
                     <div class="G">@Html.DisplayFor(modelItem => Model.ElementAt(i).G)</div>
                     <div class="H">@Html.DisplayFor(modelItem => Model.ElementAt(i).H)</div>
                     <div class="Rodzic"> Id= @Html.DisplayFor(modelItem => Model.ElementAt(i).Id) </div>
@@ -100,20 +89,22 @@
 
     if (Model.ElementAt(i).Osiagalny == true)
     {
-        
-        <div  class="Pole" id="@i" data-variableid2="@Model.ElementAt(i).Id">
+    <div class="oneButton" id="@Model.ElementAt(i).Id">
+        <button class="PoleBtn" value="@Model.ElementAt(i).Id">
 
             <div class="G">@Html.DisplayFor(modelItem => Model.ElementAt(i).G)</div>
             <div class="H">@Html.DisplayFor(modelItem => Model.ElementAt(i).H)</div>
 
             <div class="Rodzic"> Id= @Html.DisplayFor(modelItem => Model.ElementAt(i).Id) </div>
 
-        </div>
+
+        </button>
+    </div>
         continue;
     }
     if (Model.ElementAt(i).Osiagalny == false)
     {
-        <div id="@i" class="PoleP" >
+        <div id="Model.ElementAt(i).Id" class="PoleP" >
 
             <div class="G">@Html.DisplayFor(modelItem => Model.ElementAt(i).G)</div>
             <div class="H">@Html.DisplayFor(modelItem => Model.ElementAt(i).H)</div>
