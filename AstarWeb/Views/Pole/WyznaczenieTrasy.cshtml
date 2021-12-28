@@ -1,0 +1,25 @@
+﻿@model AstarWeb.Models.PoleModel
+
+@if (ViewBag.Sciezka != null)
+{
+    bool dodaniePola = false;
+    for (int j = 0; j < ViewBag.Sciezka.Count; j++)
+    {
+
+        if (Model.ElementAt(i).Id == ViewBag.Sciezka[j].Id)
+        {
+            dodaniePola = true;
+            <div id="Model.ElementAt(i).Id" class="Sciezka">
+                <div class="G">@Html.DisplayFor(modelItem => Model.ElementAt(i).G)</div>
+                <div class="H">@Html.DisplayFor(modelItem => Model.ElementAt(i).H)</div>
+                <div class="Rodzic"> Id= @Html.DisplayFor(modelItem => Model.ElementAt(i).Id) </div>
+            </div>
+        }
+    }
+    if (dodaniePola == true)
+    {
+
+        continue;
+    }
+
+}

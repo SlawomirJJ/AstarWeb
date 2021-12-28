@@ -4,28 +4,80 @@
 // Write your JavaScript code.
 $(function () {
     console.log("Page is ready");
-    $(document).on("click",".PoleBtn",function (event) {
-        event.preventDefault();
-        var poleId = $(this).val();
-        console.log("pole " + poleId + " zostało kliknięte");
-        doButtonUpdate(poleId);
+    $(document).on("click", ".pktStartowy", function (event) {
+        var flaga = true;
+        
+            $(document).on("click", ".PoleBtn", function (event) {
+                event.preventDefault();
+                if (flaga == true) {
+                flaga = false;
+                    var StartId = $(this).val();
+                    console.log("pole " + StartId + " zostało kliknięte");
+                    StartUpdate(StartId);
+                }
+            })
+        
+    
     })
 
-    function doButtonUpdate(poleId) {
-        console.log("pole " + poleId + " w funkcji doButtonUpdate");
+    function StartUpdate(StartId) {
+        console.log("pole " + StartId + " w funkcji doButtonUpdate");
         $.ajax({
             datatype: "json",
             method: 'POST',
             url: '/Pole/PoleStart',
             data: {
-                "poleId": poleId
+                "StartId": StartId
             },
             success: function (data) {
                 console.log(data);
-                $("#" + poleId).html(data);
+                $("#" + StartId).html(data);
             }
         })
 
-        console.log("pole " + poleId + " koniec");
+        console.log("pole " + StartId + " koniec");
     }
+
+
+
+    $(document).on("click", ".pktKoncowy", function (event) {
+        var flaga = true;
+        console.log("Wciśnięto przycisk koniec");
+        $(document).on("click", ".PoleBtn", function (event) {
+            event.preventDefault();
+            if (flaga == true) {
+                flaga = false;
+                var KoniecId = $(this).val();
+                console.log("pole " + KoniecId + " zostało kliknięte");
+                KoniecUpdate(KoniecId);
+            }
+        })
+
+
+    })
+
+    function KoniecUpdate(KoniecId) {
+        console.log("pole " + KoniecId + " w funkcji doButtonUpdate");
+        $.ajax({
+            datatype: "json",
+            method: 'POST',
+            url: '/Pole/PoleKoniec',
+            data: {
+                "KoniecId": KoniecId
+            },
+            success: function (data) {
+                console.log(data);
+                $("#" + KoniecId).html(data);
+            }
+        })
+
+        console.log("pole " + KoniecId + " koniec");
+    }
+
+
+
+
+
+
+
 })

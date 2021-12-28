@@ -113,10 +113,25 @@ namespace AstarWeb.Controllers
             return View("Pole");
         }
 
-        public IActionResult PoleStart(int poleId)
+        public IActionResult PoleStart(int StartId)
         {
-            Pola.ElementAt(poleId - 1).StartKon = 's';
-            return PartialView("PoleStart", Pola.ElementAt(poleId - 1));
+            
+            Pola.ElementAt(StartId - 1).StartKon = 's';
+            return PartialView("PoleStart", Pola.ElementAt(StartId - 1));
+        }
+
+        public IActionResult PoleKoniec(int KoniecId)
+        {
+            Pola.ElementAt(KoniecId - 1).StartKon = 'k';
+            return PartialView("PoleKoniec", Pola.ElementAt(KoniecId - 1));
+        }
+
+        public IActionResult WyznaczenieTrasy()
+        {
+            {   // Odejmujemy 1 bo id(zmienna wyżej "i") jest większe o 1
+                Algorytm(Pola[start - 1], Pola[koniec - 1]);
+                return PartialView("WyznaczenieTrasy", Pola);
+            }
         }
 
         /*

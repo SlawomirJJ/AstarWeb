@@ -19,15 +19,12 @@
     <button class="btn-dark" name="buttonNumber" type="submit" asp-controller="Pole" asp-action="handleButtonClickReset" OnClientClick="return false;">RESET</button>
 }
 
-@using (Html.BeginForm("handleButtonClickStart", "Pole"))
-{
-    <button class="btn-dark" name="buttonNumber" type="submit" asp-controller="Pole" asp-action="handleButtonClickStart">Wybież punkt startowy</button>
-}
 
-@using (Html.BeginForm("handleButtonClickKoniec", "Pole"))
-{
-    <button class="btn-dark" name="buttonNumber" type="submit" asp-controller="Pole" asp-action="handleButtonClickKoniec">Wybież punkt koncowy</button>
-}
+    <button class="pktStartowy" value="start">Wybież punkt startowy</button>
+    <button class="pktKoncowy" value="koniec">Wybież punkt koncowy</button>
+
+
+
 
 
 @using (Html.BeginForm("PobierzDlsiatki", "Pole"))
@@ -49,42 +46,8 @@
     }
 
     
-    if (Model.ElementAt(i).StartKon == 'k')
-    {
-        <div id="Model.ElementAt(i).Id" class="PoleK">
 
-            <div class="G">@Html.DisplayFor(modelItem => Model.ElementAt(i).G)</div>
-            <div class="H">@Html.DisplayFor(modelItem => Model.ElementAt(i).H)</div>
-
-            <div class="Rodzic"> Id= @Html.DisplayFor(modelItem => Model.ElementAt(i).Id) </div>
-
-        </div>
-        continue;
-    }
-
-    @if (ViewBag.Sciezka != null)
-    {
-        bool dodaniePola = false;
-        for (int j = 0; j < ViewBag.Sciezka.Count; j++)
-        {
-
-            if (Model.ElementAt(i).Id == ViewBag.Sciezka[j].Id)
-            {
-                dodaniePola = true;
-                <div id="Model.ElementAt(i).Id" class="Sciezka">
-                    <div class="G">@Html.DisplayFor(modelItem => Model.ElementAt(i).G)</div>
-                    <div class="H">@Html.DisplayFor(modelItem => Model.ElementAt(i).H)</div>
-                    <div class="Rodzic"> Id= @Html.DisplayFor(modelItem => Model.ElementAt(i).Id) </div>
-                </div>
-            }
-        }
-        if (dodaniePola == true)
-        {
-
-            continue;
-        }
-
-    }
+    
 
 
     if (Model.ElementAt(i).Osiagalny == true)
