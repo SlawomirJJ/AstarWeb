@@ -13,7 +13,6 @@ namespace AstarWeb.Controllers
 {
     public class PoleController : Controller
     {
-        // mpublic bool flaga;
         const int DLUGOSC_SIATKI=10;
         int DlugoscSiatki;
         static List<PoleModel> Pola = new List<PoleModel>();
@@ -69,30 +68,7 @@ namespace AstarWeb.Controllers
 
 
         /////////////////////////////////////      PRZYCISKI        //////////////////////////////
-        /*
-        public IActionResult HandleButtonClickWyznaczenieTrasy()
-        {   // Odejmujemy 1 bo id(zmienna wyżej "i") jest większe o 1
-            Algorytm(Pola[start-1], Pola[koniec-1]);
-            return View("Pole",Pola);
-        }
-        
-        public IActionResult HandleButtonClickPrzeszkody()
-        {
-            var rand = new Random();
-            for (int i = 0; i < rand.Next(1, (DlugoscSiatki* DlugoscSiatki)/2); i++)
-            {
-                int Nrprzeszkody=rand.Next(1, DlugoscSiatki * DlugoscSiatki);
-                if (Nrprzeszkody != start && Nrprzeszkody != koniec)
-                {
-                    Pola[Nrprzeszkody].Osiagalny = false;
-                }
-
-                
-            }
-            
-            return  View("Pole", Pola);
-        }
-        */
+       
         public IActionResult HandleButtonClickReset()
         {
             for (int i = 0; i < DlugoscSiatki*DlugoscSiatki; i++)
@@ -105,14 +81,7 @@ namespace AstarWeb.Controllers
         }
 
  
-        public IActionResult PobierzDlsiatki(int Dl)
-        {
-            DlugoscSiatki = Dl;
-            ViewBag.DlugoscSiatki = Dl;
-            //return View("Pole", Pola);
-            Pole();
-            return View("Pole");
-        }
+
 
         public IActionResult PoleStart(int StartId)
         {
@@ -127,6 +96,59 @@ namespace AstarWeb.Controllers
             Pola.ElementAt(KoniecId - 1).StartKon = 'k';
             //koniec = KoniecId;
             return PartialView("PoleKoniec", Pola.ElementAt(KoniecId - 1));
+        }
+        public IActionResult Rozmiar(int Rozmiar)
+        {
+            Pola.Clear();
+            for (int i = 1; i <= Rozmiar * Rozmiar; i++)
+            {
+                Pola.Add(new PoleModel(i, 0, 0, Rozmiar) { StartKon = 'n', Osiagalny = true });
+            }
+            DlugoscSiatki = Rozmiar;
+            ViewBag.DlugoscSiatki = Rozmiar;
+            return PartialView("Rozmiar", Pola);
+        }
+
+        public IActionResult DodaniePrzeszkod()
+        {
+            var rand = new Random();
+            for (int j = 0; j < Pola.Count; j++)
+            {
+                if (Pola.ElementAt(j).StartKon == 's')
+                {
+                    start = Pola.ElementAt(j);
+                }
+                else if (Pola.ElementAt(j).StartKon == 'k')
+                {
+                    koniec = Pola.ElementAt(j);
+                }
+            }
+            DlugoscSiatki = (int)Math.Sqrt(Pola.Count);
+            for (int i = 0; i < ((DlugoscSiatki * DlugoscSiatki) / 5); i++)
+                {
+                    int Nrprzeszkody = rand.Next(1, DlugoscSiatki * DlugoscSiatki);
+                    for (int j = 0; j < Pola.Count; j++)
+                    {
+                        if (Pola.ElementAt(j).StartKon == 's')
+                        {
+                            start = Pola.ElementAt(j);
+                        }
+                        else if (Pola.ElementAt(j).StartKon == 'k')
+                        {
+                            koniec = Pola.ElementAt(j);
+                        }
+                    }
+                    if (start == null || koniec == null)
+                    {
+                        Pola[Nrprzeszkody].Osiagalny = false;
+                    }
+                    else if (Nrprzeszkody != start.Id - 1 && Nrprzeszkody != koniec.Id - 1)
+                    {
+                        Pola[Nrprzeszkody].Osiagalny = false;
+                    }
+                }
+            //}
+            return PartialView("DodaniePrzeszkod", Pola);
         }
 
         public IActionResult WyznaczenieTrasy()

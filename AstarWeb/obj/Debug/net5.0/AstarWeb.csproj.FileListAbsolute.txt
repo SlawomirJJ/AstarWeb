@@ -118,3 +118,5 @@ D:\Dokumenty\studia\PracaDyplomowa\AstarWeb\AstarWeb\obj\Debug\net5.0\Razor\View
 D:\Dokumenty\studia\PracaDyplomowa\AstarWeb\AstarWeb\obj\Debug\net5.0\Razor\Views\Pole\PoleStart.cshtml.g.cs
 D:\Dokumenty\studia\PracaDyplomowa\AstarWeb\AstarWeb\obj\Debug\net5.0\Razor\Views\Pole\PoleKoniec.cshtml.g.cs
 D:\Dokumenty\studia\PracaDyplomowa\AstarWeb\AstarWeb\obj\Debug\net5.0\Razor\Views\Pole\WyznaczenieTrasy.cshtml.g.cs
+D:\Dokumenty\studia\PracaDyplomowa\AstarWeb\AstarWeb\obj\Debug\net5.0\Razor\Views\Pole\DodaniePrzeszkod.cshtml.g.cs
+D:\Dokumenty\studia\PracaDyplomowa\AstarWeb\AstarWeb\obj\Debug\net5.0\Razor\Views\Pole\Rozmiar.cshtml.g.cs

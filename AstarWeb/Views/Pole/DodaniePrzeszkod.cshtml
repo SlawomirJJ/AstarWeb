@@ -1,48 +1,34 @@
 ﻿@model IEnumerable<AstarWeb.Models.PoleModel>
-
-@{
-    ViewData["Title"] = "View";
+@{ 
+    int DlugoscSiatki = (int)Math.Sqrt(Model.Count());
 }
-
-
-
-
-@using (Html.BeginForm("handleButtonClickReset", "Pole"))
-{
-    <button class="btn-dark" name="buttonNumber" type="submit" asp-controller="Pole" asp-action="handleButtonClickReset" OnClientClick="return false;">RESET</button>
-}
-
-
-<button class="pktStartowy" value="start">Wybież punkt startowy</button>
-<button class="pktKoncowy" value="koniec">Wybież punkt koncowy</button>
-<button class="WyznaczenieTrasy">WyznaczenieTrasy</button>
-<button class="DodaniePrzeszkod">Dodaj losowe przeszkody</button>
-
-<input type="number" name="Rozmiar" id="Rozmiar" />
-<input type="submit" />
-
-
-
-
-
-<div class="Siatka">
     @for (int i = 0; i < Model.Count(); i++)
-    {// modulo z DlugoscSiatki
-        @if (ViewBag.DlugoscSiatki == null)
-        {
-            ViewBag.DlugoscSiatki = 10;
-        }
-        @if (i % ViewBag.DlugoscSiatki == 0)
+    {
+        @if (i % DlugoscSiatki == 0)
         {
             <div style="clear:both"></div>
-
         }
+        @if (Model.ElementAt(i).StartKon == 's')
+        {
+            <button class="PoleS" value="@Model.ElementAt(i).Id" id="@Model.ElementAt(i).Id">
+                <div class="G">@Html.DisplayFor(modelItem => @Model.ElementAt(i).G)</div>
+                <div class="H">@Html.DisplayFor(modelItem => Model.ElementAt(i).H)</div>
 
+                <div class="Rodzic"> Id= "@Model.ElementAt(i).Id" </div>
+            </button>
+            continue;
+        }
+        @if (Model.ElementAt(i).StartKon == 'k')
+        {
+            <button class="PoleK" value="@Model.ElementAt(i).Id" id="@Model.ElementAt(i).Id">
 
+                <div class="G">@Html.DisplayFor(modelItem => @Model.ElementAt(i).G)</div>
+                <div class="H">@Html.DisplayFor(modelItem => @Model.ElementAt(i).H)</div>
 
-
-
-
+                <div class="Rodzic"> Id= @Model.ElementAt(i).Id </div>
+            </button>
+            continue;
+        }
         if (Model.ElementAt(i).Osiagalny == true)
         {
             <div class="oneButton" id="@Model.ElementAt(i).Id">
@@ -60,19 +46,13 @@
         }
         if (Model.ElementAt(i).Osiagalny == false)
         {
-            <div id="Model.ElementAt(i).Id" class="PoleP">
+            <div id="@i" class="PoleP">
 
                 <div class="G">@Html.DisplayFor(modelItem => Model.ElementAt(i).G)</div>
                 <div class="H">@Html.DisplayFor(modelItem => Model.ElementAt(i).H)</div>
-
                 <div class="Rodzic"> Id= @Html.DisplayFor(modelItem => Model.ElementAt(i).Id) </div>
-
             </div>
             continue;
         }
 
-
-
     }
-</div>
-

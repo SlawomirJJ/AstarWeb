@@ -92,9 +92,6 @@ $(function () {
             datatype: "json",
             method: 'POST',
             url: '/Pole/WyznaczenieTrasy',
-            //data: {
-            //    "Pola": Pola
-            //},
             success: function (data) {
                 console.log(data);
                 $(".Siatka").html(data);
@@ -103,6 +100,49 @@ $(function () {
 
         console.log(" koniec wyznaczania trasy");
     }
+
+    /////////////////////         Przeszkody          //////////////////////
+    $(document).on("click", ".DodaniePrzeszkod", function (event) {
+        event.preventDefault();
+        DodaniePrzeszkod();
+    })
+
+    function DodaniePrzeszkod() {
+        $.ajax({
+            datatype: "json",
+            method: 'POST',
+            url: '/Pole/DodaniePrzeszkod',
+            success: function (data) {
+                console.log(data);
+                $(".Siatka").html(data);
+            }
+        })
+    }
+
+    /////////////////////         Rozmiar          //////////////////////
+    $(document).on("click", "#Rozmiar", function (event) {
+        event.preventDefault();
+        var Rozmiar = $(this).val();
+        ZmianaRozmiaru(Rozmiar);
+        })
+
+
+
+    function ZmianaRozmiaru(Rozmiar) {
+        $.ajax({
+            datatype: "json",
+            method: 'POST',
+            url: '/Pole/Rozmiar',
+            data: {
+                "Rozmiar": Rozmiar
+            },
+            success: function (data) {
+                console.log(data);
+                $(".Siatka").html(data);
+            }
+        })
+    }
+
 
 
 })
