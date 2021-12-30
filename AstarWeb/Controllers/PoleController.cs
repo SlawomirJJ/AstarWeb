@@ -14,7 +14,7 @@ namespace AstarWeb.Controllers
     public class PoleController : Controller
     {
         const int DLUGOSC_SIATKI=10;
-        int DlugoscSiatki;
+        static int DlugoscSiatki;
         static List<PoleModel> Pola = new List<PoleModel>();
         PoleModel start;
         PoleModel koniec;
@@ -124,7 +124,7 @@ namespace AstarWeb.Controllers
                     koniec = Pola.ElementAt(j);
                 }
             }
-            DlugoscSiatki = (int)Math.Sqrt(Pola.Count);
+            //DlugoscSiatki = (int)Math.Sqrt(Pola.Count);
             for (int i = 0; i < ((DlugoscSiatki * DlugoscSiatki) / 5); i++)
                 {
                     int Nrprzeszkody = rand.Next(1, DlugoscSiatki * DlugoscSiatki);
