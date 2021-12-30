@@ -22,7 +22,7 @@ namespace AstarWeb.Models
         public int Y { get; set; } // współrzędna y
 
 
-        public List<int> PolaSasiadujace = new List<int>();
+        public List<int> PolaSasiadujace = new List<int>();//Przechowuje Id pól sąsiadujących
 
         
         public PoleModel(int id, int g, int h,int DlugoscSiatki)
