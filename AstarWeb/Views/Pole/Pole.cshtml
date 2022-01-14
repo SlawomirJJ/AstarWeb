@@ -3,7 +3,9 @@
 @{
     ViewData["Title"] = "View";
 }
-
+@{
+    int DlugoscSiatki = (int)Math.Sqrt(Model.Count());
+}
 
 
 
@@ -28,11 +30,7 @@
 <div class="Siatka">
     @for (int i = 0; i < Model.Count(); i++)
     {// modulo z DlugoscSiatki
-        @if (ViewBag.DlugoscSiatki == null)
-        {
-            ViewBag.DlugoscSiatki = 10;
-        }
-        @if (i % ViewBag.DlugoscSiatki == 0)
+        @if (i % DlugoscSiatki == 0)
         {
             <div style="clear:both"></div>
 

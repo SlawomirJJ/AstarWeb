@@ -13,20 +13,18 @@
         "packagesPath": "C:\\Users\\Sławomir Jedziniak\\.nuget\\packages\\",
         "outputPath": "D:\\Dokumenty\\studia\\PracaDyplomowa\\AstarWeb\\AstarWeb\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
           "C:\\Users\\Sławomir Jedziniak\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "D:\\Dokumenty\\studia\\PracaDyplomowa\\A_Star_Library\\AstarLibrary\\LocalNuget": {},
+          "https://www.myget.org/F/aspnetvnext/api/v2/": {},
+          "https://www.nuget.org/api/v2/curated-feeds/microsoftdotnet/": {}
         },
         "frameworks": {
           "net5.0": {
@@ -43,12 +41,6 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "dependencies": {
-            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
-              "target": "Package",
-              "version": "[5.0.2, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",

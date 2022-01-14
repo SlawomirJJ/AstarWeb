@@ -26,40 +26,15 @@ namespace AstarWeb.Controllers
             if (DlugoscSiatki==0 )
             {
                 for (int i = 1; i <= DLUGOSC_SIATKI * DLUGOSC_SIATKI; i++)
-                {/*
-                    if (i == start)
-                    {
-                        Pola.Add(new PoleModel(i, 0, 0, DLUGOSC_SIATKI) { StartKon = 's', Osiagalny = true });
-                    }
-                    else if (i == koniec)
-                    {
-                        Pola.Add(new PoleModel(i, 0, 0, DLUGOSC_SIATKI) { StartKon = 'k', Osiagalny = true });
-                    }
-                    else */
-
-                    //{
+                {
                         Pola.Add(new PoleModel(i, 0, 0, DLUGOSC_SIATKI) { StartKon = 'n', Osiagalny = true });
-                    //}
-
                 }
             }
             else 
             {
                 for (int i = 1; i <= DlugoscSiatki * DlugoscSiatki; i++)
-                {/*
-                    if (i == start)
-                    {
-                        Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 's', Osiagalny = true });
-                    }
-                    else if (i == koniec)
-                    {
-                        Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 'k', Osiagalny = true });
-                    }
-                    else */
-                    //{
+                {
                         Pola.Add(new PoleModel(i, 0, 0, DlugoscSiatki) { StartKon = 'n', Osiagalny = true });
-                    //}
-
                 }
             }
             
@@ -86,16 +61,29 @@ namespace AstarWeb.Controllers
 
         public IActionResult PoleStart(int StartId)
         {
-            
-            Pola.ElementAt(StartId - 1).StartKon = 's';
-            //start = StartId;
+                for (int i = 0; i < Pola.Count; i++)
+                {
+                    if (Pola[i].StartKon == 's')
+                    {
+                        Pola[i].StartKon = 'n';
+                        break;
+                    }
+                }
+                Pola.ElementAt(StartId - 1).StartKon = 's';
             return PartialView("PoleStart", Pola.ElementAt(StartId - 1));
         }
 
         public IActionResult PoleKoniec(int KoniecId)
         {
-            Pola.ElementAt(KoniecId - 1).StartKon = 'k';
-            //koniec = KoniecId;
+                for (int i = 0; i < Pola.Count; i++)
+                {
+                    if (Pola[i].StartKon == 'k')
+                    {
+                        Pola[i].StartKon = 'n';
+                        break;
+                    }
+                }
+                Pola.ElementAt(KoniecId - 1).StartKon = 'k';
             return PartialView("PoleKoniec", Pola.ElementAt(KoniecId - 1));
         }
         public IActionResult Rozmiar(int Rozmiar)
@@ -155,21 +143,10 @@ namespace AstarWeb.Controllers
         public IActionResult WyznaczenieTrasy()
         {
             {
-                for (int i = 0; i < Pola.Count; i++)
-                {
-                    if (Pola.ElementAt(i).StartKon=='s')
-                    {
-                        start = Pola.ElementAt(i);
-                    }
-                    else if (Pola.ElementAt(i).StartKon == 'k')
-                    {
-                        koniec = Pola.ElementAt(i);
-                    }
-                }
                 Sciezka.Clear();
                 ViewBag.Sciezka = null;
-                ViewBag.Sciezka= Algorytm(start, koniec);
-                if (Sciezka.Count == 0)// Zwróć wiadomość że nie ma drogi
+                ViewBag.Sciezka= Algorytm(Pola);
+                if (ViewBag.Sciezka.Count == 0)// Zwróć wiadomość że nie ma drogi
                 {
                     return PartialView("Error");
                 }
@@ -179,25 +156,38 @@ namespace AstarWeb.Controllers
 
 
         //////////////////////////////           ALGORYTM       //////////////////////////////
-        public List<PoleModel> Algorytm(PoleModel PoleS, PoleModel PoleK)
+        public static List<PoleModel> Algorytm(List<PoleModel> Pola)
         {
+            PoleModel PoleS = null;
+            PoleModel PoleK = null;
+            for (int i = 0; i < Pola.Count; i++)
+            {
+                if (Pola[i].StartKon == 's')
+                {
+                    PoleS = Pola[i];
+                }
+                else if (Pola[i].StartKon == 'k')
+                {
+                    PoleK = Pola[i];
+                }
+            }
             // tablice przechowują pola
             List<PoleModel> PolaNieodwiedzoneSasiadujace = new(new[] { PoleS });  // Zbiór wierzchołków nieodwiedzonych, sąsiadujących z odwiedzonymi. 
-            List<PoleModel> PolaPrzejrzane = new(); 
+            List<PoleModel> PolaPrzejrzane = new();
             PoleModel poleNajnizszeF = null; // przechowuje pole z najniższym F
-            DlugoscSiatki = (int)Math.Sqrt(Pola.Count);
-            //Sciezka
+            int DlugoscSiatki = (int)Math.Sqrt(Pola.Count);
+            List<PoleModel> Sciezka = new();
 
 
             while (PolaNieodwiedzoneSasiadujace.Count != 0)
             {   // wybranie wierzchołka ze zbioru PolaNieodwiedzoneSasiadujace o najniższym F 
                 for (int i = 0; i < PolaNieodwiedzoneSasiadujace.Count; i++)
                 {
-                    if (i==0)
+                    if (i == 0)
                     {
                         poleNajnizszeF = PolaNieodwiedzoneSasiadujace[0];
                     }
-                    else if(PolaNieodwiedzoneSasiadujace[i].F < poleNajnizszeF.F)
+                    else if (PolaNieodwiedzoneSasiadujace[i].F < poleNajnizszeF.F)
                     {
                         poleNajnizszeF = PolaNieodwiedzoneSasiadujace[i];
                     }
@@ -208,7 +198,7 @@ namespace AstarWeb.Controllers
                 //sprawdzenie czy to węzęł końcowy
                 if (poleNajnizszeF.Id == PoleK.Id)
                 {
-                    return  RekonstrukcjaSciezki(PoleS, PoleK);
+                    return RekonstrukcjaSciezki(PoleS, PoleK);
                     //return View("Pole",Pola);
 
                 }
@@ -217,20 +207,20 @@ namespace AstarWeb.Controllers
                 PolaPrzejrzane.Add(poleNajnizszeF);//dodajemy obiekt
 
                 // usunięcie nowo sprawdzonego elementu z tablicy PolaNieodwiedzoneSasiadujace 
-                PolaNieodwiedzoneSasiadujace.Remove(poleNajnizszeF);               
+                PolaNieodwiedzoneSasiadujace.Remove(poleNajnizszeF);
 
                 //przeszukujemy pola sąsiadujące z polem "poleNajnizszeF"
                 for (int j = 0; j < poleNajnizszeF.PolaSasiadujace.Count; j++)
                 {
                     // sprawdzenie czy danego pola sąsiadującego nie ma w tablicy PolaPrzejrzanec
-                    if (!(PolaPrzejrzane.Exists(x => x.Id == poleNajnizszeF.PolaSasiadujace[j])) &&  Pola[poleNajnizszeF.PolaSasiadujace[j]-1].Osiagalny!=false)
+                    if (!(PolaPrzejrzane.Exists(x => x.Id == poleNajnizszeF.PolaSasiadujace[j])) && Pola[poleNajnizszeF.PolaSasiadujace[j] - 1].Osiagalny != false)
                     {
                         int tempG = 0;        // prawo, lewo, góra, dół
-                        if (poleNajnizszeF.Id+1== poleNajnizszeF.PolaSasiadujace[j] || poleNajnizszeF.Id - 1 == poleNajnizszeF.PolaSasiadujace[j] || poleNajnizszeF.Id + DlugoscSiatki == poleNajnizszeF.PolaSasiadujace[j] || poleNajnizszeF.Id - DlugoscSiatki == poleNajnizszeF.PolaSasiadujace[j])
+                        if (poleNajnizszeF.Id + 1 == poleNajnizszeF.PolaSasiadujace[j] || poleNajnizszeF.Id - 1 == poleNajnizszeF.PolaSasiadujace[j] || poleNajnizszeF.Id + DlugoscSiatki == poleNajnizszeF.PolaSasiadujace[j] || poleNajnizszeF.Id - DlugoscSiatki == poleNajnizszeF.PolaSasiadujace[j])
                         {
                             tempG = poleNajnizszeF.G + 10;
                         }
-                        else if(HaveNeighbourObstacle(poleNajnizszeF.Id, poleNajnizszeF.PolaSasiadujace[j]) ==true) // po skosie, czy nie ma sąsiada przeszkody
+                        else if (HaveNeighbourObstacle(poleNajnizszeF.Id, poleNajnizszeF.PolaSasiadujace[j], Pola) == true) // po skosie, czy nie ma sąsiada przeszkody
                         {
                             continue;
                         }
@@ -238,9 +228,9 @@ namespace AstarWeb.Controllers
                         {
                             tempG = poleNajnizszeF.G + 14;
                         }
-                
+
                         // jeżeli pole sąsiadujące jest w tablicy PolaNieodwiedzoneSasiadujace to sprawdź czy nie dostaniesz się tam szybciej      
-                        if (!(PolaNieodwiedzoneSasiadujace.Count==0))
+                        if (!(PolaNieodwiedzoneSasiadujace.Count == 0))
                         {
                             bool zawiera = false;  // zmienna pomocnicza
                             for (int l = 0; l < PolaNieodwiedzoneSasiadujace.Count; l++)
@@ -284,9 +274,9 @@ namespace AstarWeb.Controllers
 
 
                     }
-                        
+
                 }
-                
+
             }
             return Sciezka;//Sciezka;
         }
@@ -302,29 +292,20 @@ namespace AstarWeb.Controllers
             return H;
         }
 
-        
+
         public static List<PoleModel> RekonstrukcjaSciezki(PoleModel PunktStartowy, PoleModel PunktKoncowy)
         {
-            //List<PoleModel> Sciezka = new(new[] { PunktKoncowy });
-            Sciezka.Add(PunktKoncowy);
-            while (PunktKoncowy != PunktStartowy)
+            List<PoleModel> Sciezka = new(new[] { PunktKoncowy });
+            while (PunktKoncowy.Rodzic != PunktStartowy)
             {
-                try
-                {
-                    Sciezka.Add(PunktKoncowy.Rodzic);
-                    PunktKoncowy = PunktKoncowy.Rodzic;
-                }
-                catch (Exception)
-                {
-
-                    throw;
-                }
-                
+                Sciezka.Add(PunktKoncowy.Rodzic);
+                PunktKoncowy = PunktKoncowy.Rodzic;
             }
+            Sciezka.Reverse();
             return Sciezka;
         }
 
-        public static bool HaveNeighbourObstacle(int Id1, int Id2)
+        public static bool HaveNeighbourObstacle(int Id1, int Id2, List<PoleModel> Pola)
         {
             PoleModel PolePoSkosie = null;
             PoleModel PolePierwotne = null;
@@ -357,7 +338,7 @@ namespace AstarWeb.Controllers
                                 PoleWspolne = Pola[m];
                                 if (PoleWspolne.Osiagalny == false)
                                 {
-                                    CzyPrzeszkoda=true;                                   
+                                    CzyPrzeszkoda = true;
                                 }
                                 break;
                             }
