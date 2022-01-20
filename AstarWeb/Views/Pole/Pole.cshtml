@@ -15,9 +15,9 @@
 }
 
 
-<button class="pktStartowy" value="start">Wybież punkt startowy</button>
-<button class="pktKoncowy" value="koniec">Wybież punkt koncowy</button>
-<button class="WyznaczenieTrasy">WyznaczenieTrasy</button>
+<button class="pktStartowy" value="start">Wybierz punkt startowy</button>
+<button class="pktKoncowy" value="koniec">Wybierz punkt koncowy</button>
+<button class="WyznaczenieTrasy">Wyznaczenie trasy</button>
 <button class="DodaniePrzeszkod">Dodaj losowe przeszkody</button>
 
 <input type="number" name="Rozmiar" id="Rozmiar" />
@@ -45,13 +45,7 @@
         {
             <div class="oneButton" id="@Model.ElementAt(i).Id">
                 <button class="PoleBtn" value="@Model.ElementAt(i).Id">
-
-                    <div class="G">@Html.DisplayFor(modelItem => Model.ElementAt(i).G)</div>
-                    <div class="H">@Html.DisplayFor(modelItem => Model.ElementAt(i).H)</div>
-
-                    <div class="Rodzic"> Id= @Html.DisplayFor(modelItem => Model.ElementAt(i).Id) </div>
-
-
+                    <div class="F">F= @Html.DisplayFor(modelItem => Model.ElementAt(i).F) </div>
                 </button>
             </div>
             continue;
@@ -59,11 +53,6 @@
         if (Model.ElementAt(i).Osiagalny == false)
         {
             <div id="Model.ElementAt(i).Id" class="PoleP">
-
-                <div class="G">@Html.DisplayFor(modelItem => Model.ElementAt(i).G)</div>
-                <div class="H">@Html.DisplayFor(modelItem => Model.ElementAt(i).H)</div>
-
-                <div class="Rodzic"> Id= @Html.DisplayFor(modelItem => Model.ElementAt(i).Id) </div>
 
             </div>
             continue;

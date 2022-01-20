@@ -101,6 +101,21 @@ $(function () {
         console.log(" koniec wyznaczania trasy");
     }
 
+    function Error() {
+        console.log("w funkcji Error");
+        $.ajax({
+            datatype: "json",
+            method: 'POST',
+            url: '/Pole/Error',
+            success: function (data) {
+                console.log(data);
+                $(".Siatka").html(data);
+            }
+        })
+
+        console.log(" koniec wyznaczania trasy");
+    }
+
     /////////////////////         Przeszkody          //////////////////////
     $(document).on("click", ".DodaniePrzeszkod", function (event) {
         event.preventDefault();

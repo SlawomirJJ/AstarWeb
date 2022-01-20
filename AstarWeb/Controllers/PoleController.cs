@@ -112,7 +112,7 @@ namespace AstarWeb.Controllers
                     koniec = Pola.ElementAt(j);
                 }
             }
-            //DlugoscSiatki = (int)Math.Sqrt(Pola.Count);
+            DlugoscSiatki = (int)Math.Sqrt(Pola.Count);
             for (int i = 0; i < ((DlugoscSiatki * DlugoscSiatki) / 5); i++)
                 {
                     int Nrprzeszkody = rand.Next(1, DlugoscSiatki * DlugoscSiatki);

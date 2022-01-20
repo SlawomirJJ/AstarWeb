@@ -11,21 +11,14 @@
         @if (Model.ElementAt(i).StartKon == 's')
         {
             <button class="PoleS" value="@Model.ElementAt(i).Id" id="@Model.ElementAt(i).Id">
-                <div class="G">@Html.DisplayFor(modelItem => @Model.ElementAt(i).G)</div>
-                <div class="H">@Html.DisplayFor(modelItem => Model.ElementAt(i).H)</div>
-
-                <div class="Rodzic"> Id= "@Model.ElementAt(i).Id" </div>
+                    <div class="F">F= @Html.DisplayFor(modelItem => Model.ElementAt(i).F) </div>
             </button>
             continue;
         }
         @if (Model.ElementAt(i).StartKon == 'k')
         {
             <button class="PoleK" value="@Model.ElementAt(i).Id" id="@Model.ElementAt(i).Id">
-
-                <div class="G">@Html.DisplayFor(modelItem => @Model.ElementAt(i).G)</div>
-                <div class="H">@Html.DisplayFor(modelItem => @Model.ElementAt(i).H)</div>
-
-                <div class="Rodzic"> Id= @Model.ElementAt(i).Id </div>
+                    <div class="F">F= @Html.DisplayFor(modelItem => Model.ElementAt(i).F) </div>
             </button>
             continue;
         }
@@ -33,13 +26,7 @@
         {
             <div class="oneButton" id="@Model.ElementAt(i).Id">
                 <button class="PoleBtn" value="@Model.ElementAt(i).Id">
-
-                    <div class="G">@Html.DisplayFor(modelItem => Model.ElementAt(i).G)</div>
-                    <div class="H">@Html.DisplayFor(modelItem => Model.ElementAt(i).H)</div>
-
-                    <div class="Rodzic"> Id= @Html.DisplayFor(modelItem => Model.ElementAt(i).Id) </div>
-
-
+                    <div class="F">F= @Html.DisplayFor(modelItem => Model.ElementAt(i).F) </div>
                 </button>
             </div>
             continue;
@@ -47,10 +34,7 @@
         if (Model.ElementAt(i).Osiagalny == false)
         {
             <div id="@i" class="PoleP">
-
-                <div class="G">@Html.DisplayFor(modelItem => Model.ElementAt(i).G)</div>
-                <div class="H">@Html.DisplayFor(modelItem => Model.ElementAt(i).H)</div>
-                <div class="Rodzic"> Id= @Html.DisplayFor(modelItem => Model.ElementAt(i).Id) </div>
+                
             </div>
             continue;
         }
